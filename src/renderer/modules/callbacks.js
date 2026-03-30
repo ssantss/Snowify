@@ -18,4 +18,13 @@ export const callbacks = {
 
   /** Dev-mode: force-reload metadata + thumbnail for a track — set by app.js */
   forceReloadTrack: (_track) => {},
+
+  /** Build client favorites submenu HTML for a track — set by app.js */
+  buildClientsFavSection: (_track) => '',
+
+  /** Handle toggle-client context menu action — set by app.js */
+  handleToggleClient: (_clientId, _track) => {},
+
+  /** Re-check client injections after track changes — set by app.js */
+  recheckInjections: () => {},
 };

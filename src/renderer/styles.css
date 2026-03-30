@@ -746,6 +746,187 @@ body.sidebar-collapsed .artist-item:hover { transform: none; }
 body.sidebar-collapsed .artist-item-name { display: none; }
 body.sidebar-collapsed #section-followed-artists .sidebar-section-header { display: none; }
 
+/* ─── Client Avatar ─── */
+.client-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.client-hero-cover {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.client-hero-cover svg { width: 48px; height: 48px; fill: #fff; }
+
+/* ─── Client Track Rows ─── */
+.track-row[data-context="client"] { cursor: default; }
+.track-row[data-context="client"]:hover .track-num-play { opacity: 0; }
+.track-row[data-context="client"]:hover .track-num-text { opacity: 1; }
+
+/* ─── Clients Popover (bottom bar) ─── */
+.np-clients-btn { position: relative; }
+.np-clients-btn.has-active::after {
+  content: attr(data-count);
+  position: absolute;
+  top: 0; right: -2px;
+  min-width: 13px; height: 13px;
+  background: var(--accent);
+  color: #000;
+  border-radius: 7px;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 13px;
+  text-align: center;
+  padding: 0 3px;
+  pointer-events: none;
+}
+
+.clients-popover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  min-width: 240px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: var(--bg-elevated, #1e1e1e);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.55);
+  z-index: 200;
+  padding: 6px 0;
+  animation: menuEnter 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.clients-popover.hidden { display: none; }
+
+.clients-popover-header {
+  padding: 10px 14px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.clients-popover-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.clients-popover-item:hover { background: rgba(255,255,255,0.06); }
+
+.clients-popover-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px; font-weight: 700;
+  color: #fff;
+}
+
+.clients-popover-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary, #fff);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clients-popover-switch {
+  margin-left: auto;
+  width: 34px; height: 18px;
+  border-radius: 9px;
+  background: var(--bg-highlight, rgba(255,255,255,0.1));
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.clients-popover-switch.on { background: var(--accent); }
+.clients-popover-switch-knob {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 2px; left: 2px;
+  transition: left 0.2s;
+}
+.clients-popover-switch.on .clients-popover-switch-knob { left: 18px; }
+
+.clients-popover-empty {
+  padding: 16px 14px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+}
+
+/* ─── Queue Client Badge ─── */
+.queue-client-badge {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(102, 126, 234, 0.2);
+  color: #8ea4f0;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+/* ─── Client Toggle Icon (context menu) ─── */
+.client-toggle-icon {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--text-subdued, rgba(255,255,255,0.5));
+}
+.client-toggle-icon.is-added {
+  background: var(--accent);
+  color: #000;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/* ─── Light theme overrides for clients ─── */
+body.light-theme .clients-popover {
+  background: #fff;
+  border-color: rgba(0,0,0,0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+body.light-theme .clients-popover-header { color: rgba(0,0,0,0.45); }
+body.light-theme .clients-popover-name { color: #111; }
+body.light-theme .clients-popover-item:hover { background: rgba(0,0,0,0.04); }
+body.light-theme .clients-popover-empty { color: rgba(0,0,0,0.4); }
+body.light-theme .clients-popover-switch { background: rgba(0,0,0,0.1); }
+
+/* ─── Sidebar Clients Section (collapsed sidebar) ─── */
+body.sidebar-collapsed #section-clients .sidebar-section-header { display: none; }
+body.sidebar-collapsed #client-list .playlist-item {
+  justify-content: center;
+  padding: 6px 0;
+  gap: 0;
+}
+body.sidebar-collapsed #client-list .playlist-info { display: none; }
+
 /* ═══════ Main Content ═══════ */
 .update-banner {
   position: sticky;

@@ -85,7 +85,7 @@
         </button>
       </nav>
 
-      <div class="sidebar-section">
+      <div class="sidebar-section" id="sidebar-playlists">
         <div class="sidebar-section-header">
           <button class="section-toggle-btn">
             <svg class="section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -126,6 +126,23 @@
         </div>
         <div class="sidebar-section-body">
           <div id="artist-list" class="artist-list"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-section" id="section-clients">
+        <div class="sidebar-section-header">
+          <button class="section-toggle-btn">
+            <svg class="section-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            <h3 data-i18n="sidebar.clients">Clients</h3>
+          </button>
+          <div class="sidebar-header-actions">
+            <button class="icon-btn" id="btn-create-client" data-i18n-title="client.createClient" title="New client">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="sidebar-section-body">
+          <div id="client-list" class="playlist-list"></div>
         </div>
       </div>
     </aside>
@@ -1016,6 +1033,16 @@
       <button class="icon-btn" id="btn-queue" data-i18n-title="player.queue" title="Queue">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h10v2H4v-2zm14-1v6l5-3-5-3z"/></svg>
       </button>
+      <div style="position:relative">
+        <button class="icon-btn np-clients-btn" id="btn-clients" data-i18n-title="sidebar.clients" title="Clients">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </button>
+        <div id="clients-popover" class="clients-popover hidden">
+          <div class="clients-popover-header"><span data-i18n="client.inVenue">In Venue</span></div>
+          <div id="clients-popover-list"></div>
+          <div id="clients-popover-empty" class="clients-popover-empty hidden" data-i18n="client.noClients">No clients yet</div>
+        </div>
+      </div>
       <div class="volume-control">
         <button class="icon-btn" id="btn-volume" title="Volume" data-i18n-title="player.volume">
           <svg class="vol-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path class="vol-wave" d="M14 9.64a3.99 3.99 0 010 4.72M16.5 7a7.97 7.97 0 010 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
@@ -1348,6 +1375,7 @@
   <script src="loudness-normalizer.js"></script>
   <script src="prefetch-cache.js"></script>
   <script src="wrapped.js"></script>
+  <script src="client-manager.js"></script>
   <script type="module" src="app.js"></script>
 </body>
 </html>

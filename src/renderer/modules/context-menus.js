@@ -234,6 +234,7 @@ export function replaceTrackEverywhere(oldTrack, newTrack) {
   };
 
   state.playlists.forEach(pl => { replaced += replaceIn(pl.tracks); });
+  state.clients?.forEach(c => { replaced += replaceIn(c.favorites); });
   replaced += replaceIn(state.likedSongs);
   replaced += replaceIn(state.recentTracks);
   replaced += replaceIn(state.queue);
@@ -403,6 +404,7 @@ export function showContextMenu(e, track, { hideAddQueue = false, hidePlayNext =
   }
 
   const playlistSection = buildPlaylistSectionHtml(track);
+  const clientsSection  = callbacks.buildClientsFavSection(track);
   const addQueueHtml    = hideAddQueue ? '' : `<div class="context-menu-item" data-action="add-queue">${I18n.t('context.addToQueue')}</div>`;
   const playNextHtml    = hidePlayNext ? '' : `<div class="context-menu-item" data-action="play-next">${I18n.t('context.playNext')}</div>`;
 
@@ -431,6 +433,7 @@ export function showContextMenu(e, track, { hideAddQueue = false, hidePlayNext =
     ${isLocal ? '' : `<div class="context-menu-item" data-action="watch-video">${I18n.t('context.watchVideo')}</div>`}
     <div class="context-menu-item" data-action="like">${isLiked ? I18n.t('context.unlike') : I18n.t('context.like')}</div>
     ${playlistSection}
+    ${clientsSection}
     ${isLocal ? '' : `<div class="context-menu-divider"></div><div class="context-menu-item" data-action="share">${I18n.t('context.copyLink')}</div>`}
     ${isDevMode ? `<div class="context-menu-divider"></div><div class="context-menu-item ctx-dev-item" data-action="force-reload">${I18n.t('context.forceReload')}</div>` : ''}
   `;
@@ -493,6 +496,7 @@ export function showContextMenu(e, track, { hideAddQueue = false, hidePlayNext =
       case 'start-radio':     await startRadio(track); break;
       case 'like':            toggleLike(track); break;
       case 'toggle-playlist': handleTogglePlaylist(item.dataset.pid, track); break;
+      case 'toggle-client':   callbacks.handleToggleClient(item.dataset.cid, track); break;
       case 'share':
         navigator.clipboard.writeText(`https://snowify.cc/track/${track.id}`);
         showToast(I18n.t('toast.linkCopied'));

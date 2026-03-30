@@ -1,20 +1,21 @@
 import state from './modules/state.js';
-import { showToast, escapeHtml } from './modules/utils.js';
+import { showToast, escapeHtml, showInputModal, renderArtistLinks } from './modules/utils.js';
 import { isCustomTheme, applyTheme, populateCustomThemes } from './modules/theme.js';
 import { audioRef, VOLUME_SCALE } from './modules/audio-ref.js';
 import { callbacks } from './modules/callbacks.js';
 import { closeLyricsPanel } from './modules/lyrics.js';
 import { extractDominantColor, openMaxNP, closeMaxNP } from './modules/now-playing.js';
-import { setVolume, togglePlay, playNext, playPrev, playTrack, updateRepeatButton, showNowPlaying, getPrefetchCache } from './modules/player.js';
-import { renderQueue } from './modules/queue.js';
+import { setVolume, togglePlay, playNext, playPrev, playTrack, playFromList, toggleLike, updateRepeatButton, showNowPlaying, getPrefetchCache } from './modules/player.js';
+import { renderQueue, handlePlayNext, handleAddToQueue } from './modules/queue.js';
 import { renderPlaylists, renderLibrary, renderSidebarArtists } from './modules/library.js';
 import { renderHome } from './modules/home.js';
 import { renderExplore } from './modules/explore.js';
 import { showAlbumDetail } from './modules/album.js';
-import { openArtistPage } from './modules/artist.js';
+import { openArtistPage, bindArtistLinks } from './modules/artist.js';
 import { syncSearchHint, closeSuggestions } from './modules/search.js';
 import { initSettings, settingsCallbacks, resetSettingsInitialized } from './modules/settings.js';
 import { loadEnabledPlugins } from './modules/plugins.js';
+import { renderTrackList, removeContextMenu } from './modules/context-menus.js';
 
 'use strict';
 
@@ -486,6 +487,7 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
       showListeningActivity: state.showListeningActivity,
       minimizeToTray: state.minimizeToTray,
       launchOnStartup: state.launchOnStartup,
+      clients: state.clients,
     });
   }
 
@@ -613,6 +615,13 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
     state.showListeningActivity = cloud.showListeningActivity ?? state.showListeningActivity;
     state.minimizeToTray = cloud.minimizeToTray ?? state.minimizeToTray;
     state.launchOnStartup = cloud.launchOnStartup ?? state.launchOnStartup;
+    if (cloud.clients) {
+      cloud.clients.forEach(cc => {
+        const existing = state.clients.find(c => c.id === cc.id);
+        if (existing) { existing.name = cc.name; existing.favorites = cc.favorites || []; }
+        else state.clients.push(cc);
+      });
+    }
 
     _cloudSyncPaused = true;
     saveState();
@@ -620,6 +629,10 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
 
     renderPlaylists();
     renderSidebarArtists();
+    if (window.__snowifyClientManager) {
+      window.__snowifyClientManager.renderList();
+      window.__snowifyClientManager.updateButton();
+    }
     renderHome();
     applyTheme(state.theme);
 
@@ -759,6 +772,7 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         songSources: state.songSources,
         metadataSources: state.metadataSources,
         wrappedShownYear: state.wrappedShownYear,
+        clients: state.clients,
       }));
       localStorage.setItem('snowify_lastSave', String(Date.now()));
     } catch (e) {
@@ -766,9 +780,13 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
     }
     // Queue persistence (local-only)
     try {
+      const stripClientTags = t => {
+        if (t._clientIds) { const { _clientIds, _clientNames, ...clean } = t; return clean; }
+        return t;
+      };
       localStorage.setItem('snowify_queue', JSON.stringify({
-        queue: state.queue,
-        originalQueue: state.originalQueue,
+        queue: state.queue.map(stripClientTags),
+        originalQueue: state.originalQueue.map(stripClientTags),
         queueIndex: state.queueIndex,
         playingPlaylistId: state.playingPlaylistId
       }));
@@ -837,6 +855,8 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         state.songSources = saved.songSources || ['youtube'];
         state.metadataSources = saved.metadataSources || ['youtube'];
         state.wrappedShownYear = saved.wrappedShownYear ?? null;
+        state.clients = saved.clients || [];
+        state.clientsPresent = [];
 
         // Persist once after deproxying old mobile proxy URLs in local state.
         if (JSON.stringify(rawSaved) !== JSON.stringify(saved)) {
@@ -885,6 +905,9 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
     }
 
     closeLyricsPanel();
+    if (name !== 'playlist' && window.__snowifyClientManager) {
+      window.__snowifyClientManager.clearCurrentClient();
+    }
 
     if (name === 'home') {
       renderHome();
@@ -1183,6 +1206,35 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
     renderPlaylists();
     renderSidebarArtists();
     renderHome();
+
+    // ─── Client Manager init ───
+    if (window.ClientManager) {
+      const clientMgr = window.ClientManager({
+        getState: () => state,
+        saveState,
+        renderQueue,
+        showToast,
+        showInputModal,
+        showNowPlaying,
+        switchView,
+        renderTrackList,
+        playFromList,
+        toggleLike,
+        handlePlayNext,
+        handleAddToQueue,
+        getEngine: () => audioRef.engine,
+        getUpNexts: (id) => window.snowify.getUpNexts(id),
+        $, escapeHtml, removeContextMenu, renderArtistLinks, bindArtistLinks,
+      });
+      window.__snowifyClientManager = clientMgr;
+      callbacks.buildClientsFavSection = clientMgr.buildFavSection;
+      callbacks.handleToggleClient = clientMgr.handleToggle;
+      callbacks.recheckInjections = clientMgr.recheckInjections;
+      clientMgr.init();
+      clientMgr.renderList();
+      clientMgr.updateButton();
+    }
+
     initSettings().catch(err => {
       console.error('[initSettings crashed]', err);
       showToast('Settings error: ' + err.message);

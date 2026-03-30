@@ -253,7 +253,7 @@ export function renderQueueItem(track, isActive, showRemove, queueIndex) {
       <img data-src="${escapeHtml(track.thumbnail || (track.isLocal ? LOCAL_THUMB_FALLBACK : ''))}" alt="" />
       <div class="queue-item-info">
         <div class="queue-item-title">${escapeHtml(track.title)}</div>
-        <div class="queue-item-artist">${renderArtistLinks(track)}</div>
+        <div class="queue-item-artist">${renderArtistLinks(track)}${track._clientNames?.length ? `<span class="queue-client-badge">${escapeHtml(track._clientNames[0])}${track._clientNames.length > 1 ? ' +' + (track._clientNames.length - 1) : ''}</span>` : ''}</div>
       </div>
       ${removeHtml}
     </div>`;

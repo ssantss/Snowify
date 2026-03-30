@@ -44,7 +44,10 @@ const state = {
   playLog: [],
   wrappedShownYear: null,
   // Spotify genre cache — stored in a separate localStorage key
-  trackGenreCache: {}
+  trackGenreCache: {},
+  // Client manager
+  clients: [],
+  clientsPresent: [],
 };
 
 export default state;
