@@ -266,13 +266,13 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
           </button>
           <button class="icon-btn playlist-action-btn dl-collection-btn" id="btn-download-playlist" data-i18n-title="playlist.download" title="Download playlist">
-            <svg class="dl-progress-ring" width="22" height="22" viewBox="0 0 28 28">
+            <svg class="dl-progress-ring" width="30" height="30" viewBox="0 0 28 28">
               <circle class="dl-ring-bg" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" opacity="0.15"/>
               <circle class="dl-ring-fill" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="75.4" stroke-dashoffset="75.4" transform="rotate(-90 14 14)"/>
             </svg>
-            <svg class="dl-icon-default" width="16" height="16" viewBox="2 2 20 16" fill="currentColor"><path d="M12 18l-8-8h5V2h6v8h5l-8 8z"/></svg>
-            <svg class="dl-icon-done" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span class="dl-burst"></span>
+            <svg class="dl-icon dl-icon-default" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <svg class="dl-icon dl-icon-spinner" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M3 12h3M18 12h3M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" opacity="0.7"/></svg>
+            <svg class="dl-icon dl-icon-done" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </button>
           <span class="playlist-actions-spacer"></span>
           <button class="btn-setting-action playlist-files-btn" id="btn-import-folder" data-i18n="playlist.updateFiles" title="Update Files" style="display:none">Update Files</button>
@@ -306,13 +306,13 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
           <button class="icon-btn playlist-action-btn dl-collection-btn" id="btn-album-download" data-i18n-title="playlist.download" title="Download">
-            <svg class="dl-progress-ring" width="22" height="22" viewBox="0 0 28 28">
+            <svg class="dl-progress-ring" width="30" height="30" viewBox="0 0 28 28">
               <circle class="dl-ring-bg" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" opacity="0.15"/>
               <circle class="dl-ring-fill" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="75.4" stroke-dashoffset="75.4" transform="rotate(-90 14 14)"/>
             </svg>
-            <svg class="dl-icon-default" width="16" height="16" viewBox="2 2 20 16" fill="currentColor"><path d="M12 18l-8-8h5V2h6v8h5l-8 8z"/></svg>
-            <svg class="dl-icon-done" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span class="dl-burst"></span>
+            <svg class="dl-icon dl-icon-default" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <svg class="dl-icon dl-icon-spinner" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M3 12h3M18 12h3M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" opacity="0.7"/></svg>
+            <svg class="dl-icon dl-icon-done" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </button>
         </div>
         <div id="album-tracks" class="track-list"></div>
@@ -623,6 +623,29 @@
                 <option value="10" data-i18n="settings.prefetch10Tracks">10 tracks</option>
                 <option value="-1" data-i18n="settings.prefetchEntireQueue">Entire queue</option>
               </select>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-label" data-i18n="settings.downloadFormat">Download format</span>
+                <span class="setting-desc" data-i18n="settings.downloadFormatDesc">Format used for offline playlist & song downloads</span>
+              </div>
+              <select class="setting-select" id="setting-download-format">
+                <option value="mp3">MP3</option>
+                <option value="flac">FLAC</option>
+                <option value="m4a">M4A</option>
+                <option value="ogg">OGG</option>
+                <option value="wav">WAV</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <span class="setting-label" data-i18n="settings.downloadFolder">Download folder</span>
+                <span class="setting-desc" id="setting-download-folder-path">~/Music/Snowify</span>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn-setting-action" id="btn-browse-download-folder" data-i18n="settings.browse">Browse</button>
+                <button class="btn-setting-action" id="btn-reset-download-folder" data-i18n="settings.reset">Reset</button>
+              </div>
             </div>
           </div>
 
@@ -1011,6 +1034,9 @@
       </div>
       <button class="icon-btn np-like" id="np-like" title="Like" data-i18n-title="player.like">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </button>
+      <button class="icon-btn np-save-mp3 hidden" id="np-save-mp3" title="Save song" data-i18n-title="player.saveSong">
+        <svg class="np-save-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </button>
     </div>
 

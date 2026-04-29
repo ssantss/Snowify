@@ -562,7 +562,6 @@
   "plugins.themeApplied": "Theme applied",
   "plugins.themeActive": "Active",
   "plugins.themeApply": "Apply",
-
   "settings.sources": "Sources",
   "settings.songSources": "Song sources",
   "settings.songSourcesDesc": "First enabled source is primary; others are used as automatic fallbacks.",
@@ -582,7 +581,6 @@
   "settings.devWrappedDesc": "Open the Year in Review overlay without waiting for year-end.",
   "settings.devWrappedBtn": "Preview →",
   "toast.atLeastOneSource": "At least one source must stay enabled.",
-
   "wrapped.your": "Your",
   "wrapped.wrapped": "Wrapped",
   "wrapped.introSub": "Your year in music",
@@ -611,7 +609,6 @@
   "wrapped.outroNotes": "notes played",
   "wrapped.outroTitle": "Thanks for\nlistening.",
   "wrapped.outroSub": "Here's to",
-
   "replace.title": "Find Other Versions",
   "replace.searching": "Searching for versions...",
   "replace.noResults": "No alternative versions found",
@@ -619,7 +616,6 @@
   "toast.trackReplaced": "Track replaced",
   "toast.trackReplacedEverywhere": "Replaced in {{count}} places",
   "toast.playingSelectedVersion": "Playing selected version",
-
   "sidebar.clients": "Clients",
   "client.type": "CLIENT",
   "client.noClients": "No clients yet",
@@ -642,7 +638,6 @@
   "toast.removedFromClientFav": "Removed from {{name}}'s favorites",
   "toast.clientFavInjected": "{{name}}'s favorites added to queue",
   "toast.clientFavRemoved": "{{name}}'s favorites removed from queue",
-
   "playlist.download": "Download playlist",
   "playlist.removeDownload": "Remove download",
   "playlist.confirmRemoveDownload": "Remove all downloaded files for this playlist?",
@@ -654,5 +649,15 @@
   "toast.downloadStarted.other": "Downloading {{count}} tracks…",
   "toast.playlistDownloaded": "Playlist downloaded",
   "toast.playlistDownloadPartial": "Some tracks failed — playlist partially downloaded",
-  "downloads.active": "Downloads"
+  "downloads.active": "Downloads",
+  "settings.downloadFormat": "Download format",
+  "settings.downloadFormatDesc": "Format used for offline playlist & song downloads",
+  "settings.downloadFolder": "Download folder",
+  "settings.browse": "Browse",
+  "settings.reset": "Reset",
+  "toast.downloadFolderReset": "Download folder reset to default",
+  "context.downloadSong": "Download song",
+  "toast.songSaved": "Song saved",
+  "toast.songSaveError": "Could not save song",
+  "player.saveSong": "Save song"
 }

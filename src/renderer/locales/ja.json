@@ -631,7 +631,6 @@
   "toast.removedFromClientFav": "{{name}}のお気に入りから削除",
   "toast.clientFavInjected": "{{name}}のお気に入りをキューに追加",
   "toast.clientFavRemoved": "{{name}}のお気に入りをキューから削除",
-
   "playlist.download": "プレイリストをダウンロード",
   "playlist.removeDownload": "ダウンロードを削除",
   "playlist.confirmRemoveDownload": "このプレイリストのダウンロードファイルをすべて削除しますか？",
@@ -643,5 +642,15 @@
   "toast.downloadStarted.other": "{{count}}曲をダウンロード中…",
   "toast.playlistDownloaded": "プレイリストをダウンロードしました",
   "toast.playlistDownloadPartial": "一部の曲が失敗 — プレイリストを部分的にダウンロードしました",
-  "downloads.active": "ダウンロード"
+  "downloads.active": "ダウンロード",
+  "settings.downloadFormat": "ダウンロード形式",
+  "settings.downloadFormatDesc": "オフライン用の曲とプレイリストのダウンロード形式",
+  "settings.downloadFolder": "ダウンロードフォルダ",
+  "settings.browse": "参照",
+  "settings.reset": "リセット",
+  "toast.downloadFolderReset": "ダウンロードフォルダをリセットしました",
+  "context.downloadSong": "曲をダウンロード",
+  "toast.songSaved": "曲を保存しました",
+  "toast.songSaveError": "曲を保存できませんでした",
+  "player.saveSong": "曲を保存"
 }

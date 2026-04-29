@@ -8200,105 +8200,51 @@ body.i18n-switching { opacity: 0; }
 .platform-mobile .explore-section > h2 { padding: 0 var(--page-pad) 10px; }
 
 
-/* ─── Persistent Downloads (playlist/album/global indicator) ─── */
-.dl-collection-btn { position: relative; }
-
-.dl-btn-wrap {
+/* ─── Persistent Downloads (playlist/album buttons + global indicator) ─── */
+/* Mirrors the now-playing save button: minimal animation, plugin-style. */
+.dl-collection-btn {
   position: relative;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.15s, color 0.15s, background 0.15s, transform 0.15s;
 }
+.dl-collection-btn:hover { opacity: 1; color: var(--accent); }
+.dl-collection-btn:active { transform: scale(0.94); }
 
-.dl-btn-wrap .dl-icon { position: absolute; }
-.dl-btn-wrap .dl-icon-done { display: none; }
-.dl-btn-wrap .dl-progress-ring { position: absolute; inset: 0; opacity: 0; transition: opacity 0.2s; }
+/* All 3 SVG icons stack centered; show only one at a time */
+.dl-collection-btn .dl-icon { display: none; }
+.dl-collection-btn:not(.downloading):not(.downloaded) .dl-icon-default { display: inline-block; }
+.dl-collection-btn.downloading.dl-loading .dl-icon-spinner { display: inline-block; }
+.dl-collection-btn.downloaded .dl-icon-done { display: inline-block; }
 
-.dl-collection-btn.downloading .dl-progress-ring { opacity: 1; transform: scale(1.286); }
-.dl-collection-btn.downloaded .dl-icon-default { display: none; }
-.dl-collection-btn.downloaded .dl-icon-done { display: inline; }
-.dl-collection-btn.downloaded .dl-progress-ring { opacity: 0; }
-.dl-collection-btn.downloaded {
-  background: var(--accent);
-  color: #000;
-  border-radius: 50%;
-}
-.dl-collection-btn.downloaded:hover { background: var(--accent-hover, var(--accent)); color: #000; }
-
-.dl-ring-fill { transition: stroke-dashoffset 0.3s ease; }
-
-/* Icon pop on download complete */
-.dl-collection-btn.dl-completing .dl-icon-done {
-  animation: dl-icon-pop .4s .1s cubic-bezier(.34,1.56,.64,1) both;
-}
-@keyframes dl-icon-pop {
-  0% { transform: scale(0); }
-  100% { transform: scale(1); }
-}
-/* Elastic scale on complete */
-.dl-collection-btn.dl-completing {
-  animation: save-elastic .5s cubic-bezier(.34,1.56,.64,1);
-}
-/* Burst rings */
-.dl-burst {
+/* Progress ring: invisible by default, shown only while downloading and tracks > 0 */
+.dl-progress-ring {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  border-radius: 50%;
-}
-.dl-burst::before,
-.dl-burst::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
+  margin: auto;
+  width: 30px;
+  height: 30px;
   opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
 }
-.dl-collection-btn.dl-completing .dl-burst::before {
-  animation: burst-ring .6s ease-out forwards;
+.dl-collection-btn.downloading:not(.dl-loading) .dl-progress-ring { opacity: 1; }
+.dl-collection-btn.downloading:not(.dl-loading) .dl-icon-default { display: inline-block; }
+.dl-ring-fill { transition: stroke-dashoffset 0.3s ease; color: var(--accent); }
+.dl-ring-fill[stroke="currentColor"] { stroke: var(--accent); }
+
+/* Loading state (downloaded === 0): rotate ONLY the inner spinner SVG */
+.dl-collection-btn.dl-loading .dl-icon-spinner {
+  animation: dl-spin 0.85s linear infinite;
+  transform-origin: center;
 }
-.dl-collection-btn.dl-completing .dl-burst::after {
-  animation: burst-ring .6s .1s ease-out forwards;
+@keyframes dl-spin { to { transform: rotate(360deg); } }
+
+/* Persistent done state — accent color, no background fill, no boing */
+.dl-collection-btn.downloaded {
+  opacity: 1;
+  color: var(--accent);
 }
-/* Kick animation on download start */
-.dl-collection-btn.dl-starting {
-  animation: dl-start-kick .4s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes dl-start-kick {
-  0% { transform: scale(1); }
-  30% { transform: scale(0.7); }
-  60% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-}
-/* ─── Indeterminate loading spinner — waiting for first track ─── */
-.dl-collection-btn.dl-loading .dl-progress-ring {
-  animation: dl-spinner-rotate 2s linear infinite;
-}
-.dl-collection-btn.dl-loading .dl-ring-bg {
-  animation: dl-ring-breathe 2s ease-in-out infinite;
-}
-.dl-collection-btn.dl-loading .dl-ring-fill {
-  animation: dl-spinner-dash 1.5s ease-in-out infinite;
-}
-@keyframes dl-spinner-rotate {
-  0% { transform: scale(1.286) rotate(0deg); }
-  100% { transform: scale(1.286) rotate(360deg); }
-}
-@keyframes dl-ring-breathe {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.35; }
-}
-@keyframes dl-spinner-dash {
-  0%, 100% { stroke-dashoffset: 56.55; }
-  50% { stroke-dashoffset: 18.85; }
-}
-/* Fade out on remove download */
-.dl-collection-btn.dl-removing {
-  animation: save-fadeout .3s ease-out;
-}
+.dl-collection-btn.downloaded:hover { transform: scale(1.05); }
 
 /* Downloaded badge on library cards */
 .lib-card-downloaded {
@@ -8542,3 +8488,28 @@ body.i18n-switching { opacity: 0; }
 .track-row[data-context="client"]:hover .track-num-play { display: none !important; }
 .track-row[data-context="search"]:hover .track-num-text,
 .track-row[data-context="client"]:hover .track-num-text { display: inline; }
+
+/* ─── Now-playing Save MP3 button ─── */
+.np-save-mp3 {
+  position: relative;
+  opacity: 0.7;
+  transition: opacity 0.15s, color 0.15s, transform 0.15s;
+}
+.np-save-mp3.hidden { display: none; }
+.np-save-mp3:hover:not(:disabled) {
+  opacity: 1;
+  color: var(--accent);
+}
+.np-save-mp3:active { transform: scale(0.94); }
+.np-save-mp3:disabled { cursor: default; }
+.np-save-mp3.saving { opacity: 0.55; pointer-events: none; }
+/* Spin only the inner SVG, not the whole button */
+.np-save-mp3.saving .np-save-icon { animation: np-save-spin 0.85s linear infinite; transform-origin: center; }
+@keyframes np-save-spin { to { transform: rotate(360deg); } }
+/* Persistent "saved" state — track is already on disk */
+.np-save-mp3.saved {
+  opacity: 1;
+  color: var(--accent);
+  cursor: pointer;
+}
+.np-save-mp3.saved:hover { transform: scale(1.05); }

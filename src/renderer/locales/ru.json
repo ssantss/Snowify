@@ -631,7 +631,6 @@
   "toast.removedFromClientFav": "Удалено из избранного {{name}}",
   "toast.clientFavInjected": "Избранное {{name}} добавлено в очередь",
   "toast.clientFavRemoved": "Избранное {{name}} удалено из очереди",
-
   "playlist.download": "Скачать плейлист",
   "playlist.removeDownload": "Удалить загрузку",
   "playlist.confirmRemoveDownload": "Удалить все загруженные файлы этого плейлиста?",
@@ -643,5 +642,15 @@
   "toast.downloadStarted.other": "Загрузка {{count}} треков…",
   "toast.playlistDownloaded": "Плейлист загружен",
   "toast.playlistDownloadPartial": "Некоторые треки не загрузились — плейлист загружен частично",
-  "downloads.active": "Загрузки"
+  "downloads.active": "Загрузки",
+  "settings.downloadFormat": "Формат загрузки",
+  "settings.downloadFormatDesc": "Формат для офлайн-загрузок песен и плейлистов",
+  "settings.downloadFolder": "Папка загрузок",
+  "settings.browse": "Обзор",
+  "settings.reset": "Сбросить",
+  "toast.downloadFolderReset": "Папка загрузок сброшена",
+  "context.downloadSong": "Скачать песню",
+  "toast.songSaved": "Песня сохранена",
+  "toast.songSaveError": "Не удалось сохранить песню",
+  "player.saveSong": "Сохранить песню"
 }

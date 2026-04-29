@@ -631,7 +631,6 @@
   "toast.removedFromClientFav": "{{name}} favorilerinden kaldırıldı",
   "toast.clientFavInjected": "{{name}} favorileri sıraya eklendi",
   "toast.clientFavRemoved": "{{name}} favorileri sıradan kaldırıldı",
-
   "playlist.download": "Çalma listesini indir",
   "playlist.removeDownload": "İndirmeyi kaldır",
   "playlist.confirmRemoveDownload": "Bu çalma listesindeki tüm indirilen dosyalar kaldırılsın mı?",
@@ -643,5 +642,15 @@
   "toast.downloadStarted.other": "{{count}} parça indiriliyor…",
   "toast.playlistDownloaded": "Çalma listesi indirildi",
   "toast.playlistDownloadPartial": "Bazı parçalar başarısız — çalma listesi kısmen indirildi",
-  "downloads.active": "İndirmeler"
+  "downloads.active": "İndirmeler",
+  "settings.downloadFormat": "İndirme formatı",
+  "settings.downloadFormatDesc": "Çevrimdışı şarkı ve çalma listesi indirmeleri için kullanılan format",
+  "settings.downloadFolder": "İndirme klasörü",
+  "settings.browse": "Gözat",
+  "settings.reset": "Sıfırla",
+  "toast.downloadFolderReset": "İndirme klasörü sıfırlandı",
+  "context.downloadSong": "Şarkıyı indir",
+  "toast.songSaved": "Şarkı kaydedildi",
+  "toast.songSaveError": "Şarkı kaydedilemedi",
+  "player.saveSong": "Şarkıyı kaydet"
 }

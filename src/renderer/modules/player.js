@@ -735,6 +735,9 @@ export function showNowPlaying(track) {
   const isLiked = state.likedSongs.some(t => t.id === track.id);
   $('#np-like').classList.toggle('liked', isLiked);
 
+  // Save-mp3 button: hide for local tracks; mark "saved" if track is already downloaded.
+  refreshNpSaveButton(track);
+
   updateNowPlayingSidePanel(track);
 
   updateMediaSession(track);
@@ -875,6 +878,94 @@ npLike.addEventListener('click', () => {
     $('#max-np-like').classList.toggle('liked', liked);
   }
 });
+
+// ─── Now-playing save MP3 button ────────────────────────────────────────────
+const NP_SAVE_DL_SVG = '<svg class="np-save-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+const NP_SAVE_SPINNER_SVG = '<svg class="np-save-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M3 12h3M18 12h3M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" opacity="0.7"/></svg>';
+const NP_SAVE_CHECK_SVG = '<svg class="np-save-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+let _npSaveBusy = false;
+const _npSavedPaths = new Map(); // trackId → on-disk path (current session cache)
+
+function _setNpSaveState(state) {
+  const btn = $('#np-save-mp3');
+  if (!btn) return;
+  btn.classList.remove('saving', 'saved');
+  if (state === 'saving') {
+    btn.classList.add('saving');
+    btn.innerHTML = NP_SAVE_SPINNER_SVG;
+    btn.title = '…';
+  } else if (state === 'saved') {
+    btn.classList.add('saved');
+    btn.innerHTML = NP_SAVE_CHECK_SVG;
+    btn.title = I18n.t('context.showInFolder');
+  } else {
+    btn.innerHTML = NP_SAVE_DL_SVG;
+    btn.title = I18n.t('player.saveSong');
+  }
+}
+
+async function refreshNpSaveButton(track) {
+  const btn = $('#np-save-mp3');
+  if (!btn) return;
+  const canSave = !!track && !!track.url && !track.isLocal;
+  btn.classList.toggle('hidden', !canSave);
+  if (!canSave) return;
+  // 1) Was saved this session?
+  let knownPath = _npSavedPaths.get(track.id);
+  // 2) Tracked by playlist-download manager?
+  if (!knownPath) {
+    knownPath = window.__snowifyPlaylistDl?.getTrackPath?.(track.id) || null;
+  }
+  if (knownPath) {
+    try {
+      const ok = await window.snowify.fileExists(knownPath);
+      if (ok) { _npSavedPaths.set(track.id, knownPath); _setNpSaveState('saved'); return; }
+      _npSavedPaths.delete(track.id);
+    } catch (_) {}
+  }
+  _setNpSaveState('default');
+}
+
+const npSave = $('#np-save-mp3');
+if (npSave) {
+  npSave.addEventListener('click', async () => {
+    if (_npSaveBusy) return;
+    const track = state.queue[state.queueIndex];
+    if (!track || !track.url || track.isLocal) return;
+    // If already saved → open folder instead of re-downloading
+    if (npSave.classList.contains('saved')) {
+      const path = _npSavedPaths.get(track.id);
+      if (path) window.snowify.showInFolder(path);
+      return;
+    }
+    _npSaveBusy = true;
+    _setNpSaveState('saving');
+    try {
+      const folder = state.downloadFolder || (await window.snowify.getDefaultMusicDir());
+      const result = await window.snowify.saveSongToFolder(
+        track.url, track.title, track.artist, track.thumbnail, folder, state.downloadFormat || 'mp3'
+      );
+      if (result?.success) {
+        _npSavedPaths.set(track.id, result.filePath);
+        _setNpSaveState('saved');
+        showToast(I18n.t('toast.songSaved'), {
+          label: I18n.t('context.showInFolder'),
+          onClick: () => window.snowify.showInFolder(result.filePath),
+        });
+      } else {
+        _setNpSaveState('default');
+        if (result?.error) showToast(I18n.t('toast.songSaveError'));
+      }
+    } catch (err) {
+      console.warn('np-save-mp3 failed:', err);
+      _setNpSaveState('default');
+      showToast(I18n.t('toast.songSaveError'));
+    } finally {
+      _npSaveBusy = false;
+    }
+  });
+}
 
 export function toggleLike(track) {
   const idx = state.likedSongs.findIndex(t => t.id === track.id);

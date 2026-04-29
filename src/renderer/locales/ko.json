@@ -631,7 +631,6 @@
   "toast.removedFromClientFav": "{{name}}의 즐겨찾기에서 삭제됨",
   "toast.clientFavInjected": "{{name}}의 즐겨찾기가 대기열에 추가됨",
   "toast.clientFavRemoved": "{{name}}의 즐겨찾기가 대기열에서 삭제됨",
-
   "playlist.download": "플레이리스트 다운로드",
   "playlist.removeDownload": "다운로드 삭제",
   "playlist.confirmRemoveDownload": "이 플레이리스트의 다운로드된 파일을 모두 삭제하시겠습니까?",
@@ -643,5 +642,15 @@
   "toast.downloadStarted.other": "{{count}}곡 다운로드 중…",
   "toast.playlistDownloaded": "플레이리스트가 다운로드되었습니다",
   "toast.playlistDownloadPartial": "일부 트랙 실패 — 플레이리스트가 부분적으로 다운로드되었습니다",
-  "downloads.active": "다운로드"
+  "downloads.active": "다운로드",
+  "settings.downloadFormat": "다운로드 형식",
+  "settings.downloadFormatDesc": "오프라인 곡 및 플레이리스트 다운로드에 사용되는 형식",
+  "settings.downloadFolder": "다운로드 폴더",
+  "settings.browse": "찾아보기",
+  "settings.reset": "재설정",
+  "toast.downloadFolderReset": "다운로드 폴더가 기본값으로 재설정됨",
+  "context.downloadSong": "곡 다운로드",
+  "toast.songSaved": "곡이 저장되었습니다",
+  "toast.songSaveError": "곡을 저장할 수 없습니다",
+  "player.saveSong": "곡 저장"
 }

@@ -541,6 +541,8 @@ export function showPlaylistDetail(playlist, isLiked) {
     if (isLiked) return;
     if (confirm(I18n.t('playlist.confirmDelete', { name: playlist.name }))) {
       if (playlist.coverImage) window.snowify.deleteImage(playlist.coverImage);
+      // Cleanup orphaned download state for this playlist
+      try { window.__snowifyPlaylistDl?.removeDownload(playlist.id); } catch (_) {}
       state.playlists = state.playlists.filter(p => p.id !== playlist.id);
       if (state.playingPlaylistId === playlist.id) state.playingPlaylistId = null;
       callbacks.saveState();
@@ -763,10 +765,16 @@ export function renderLibrary() {
     return;
   }
 
+  const dlMgr = window.__snowifyPlaylistDl;
   container.innerHTML = `<div class="library-grid">${allPlaylists.map(p => {
+    const dlId = p.isLiked ? 'liked' : p.id;
+    const isDled = dlMgr?.isDownloaded(dlId);
+    const dlBadgeHtml = isDled
+      ? `<div class="lib-card-downloaded" title="Downloaded"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>`
+      : '';
     const coverHtml = p.isLiked
-      ? `<div class="lib-card-cover liked-cover"><svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>`
-      : `<div class="lib-card-cover">${getPlaylistCoverHtml(p, 'lib')}</div>`;
+      ? `<div class="lib-card-cover liked-cover">${dlBadgeHtml}<svg width="32" height="32" viewBox="0 0 24 24" fill="#fff"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>`
+      : `<div class="lib-card-cover">${dlBadgeHtml}${getPlaylistCoverHtml(p, 'lib')}</div>`;
     return `
       <div class="lib-card" data-playlist="${p.id}">
         ${coverHtml}
