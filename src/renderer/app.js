@@ -773,6 +773,8 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         metadataSources: state.metadataSources,
         wrappedShownYear: state.wrappedShownYear,
         clients: state.clients,
+        downloadFolder: state.downloadFolder,
+        downloadFormat: state.downloadFormat,
       }));
       localStorage.setItem('snowify_lastSave', String(Date.now()));
     } catch (e) {
@@ -857,6 +859,8 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         state.wrappedShownYear = saved.wrappedShownYear ?? null;
         state.clients = saved.clients || [];
         state.clientsPresent = [];
+        state.downloadFolder = saved.downloadFolder || '';
+        state.downloadFormat = saved.downloadFormat || 'mp3';
 
         // Persist once after deproxying old mobile proxy URLs in local state.
         if (JSON.stringify(rawSaved) !== JSON.stringify(saved)) {
@@ -1233,6 +1237,49 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
       clientMgr.init();
       clientMgr.renderList();
       clientMgr.updateButton();
+    }
+
+    // ─── Persistent Downloads (PlaylistDownloadManager + DownloadUI) ───
+    if (window.PlaylistDownloadManager && window.DownloadUI) {
+      const playlistDl = window.PlaylistDownloadManager({
+        getState: () => state,
+        downloadTrack: (url, q, id, plId, format, thumbnailUrl, title, artist, userFolder, includeArtist, trackNumber) =>
+          window.snowify.downloadPlaylistTrack(url, q, id, plId, format, thumbnailUrl, title, artist, userFolder, includeArtist, trackNumber),
+        cancelDownload: () => window.snowify.cancelPlaylistDownload(),
+        deleteDownload: (plId, filePaths) => window.snowify.deletePlaylistDownload(plId, filePaths),
+      });
+
+      const downloadUI = window.DownloadUI({
+        playlistDl, showToast, I18n, $, renderLibrary,
+        getDownloadFolder: async () => state.downloadFolder || (await window.snowify.getDefaultMusicDir()),
+        fileExists: (p) => window.snowify.fileExists(p),
+      });
+
+      // Register callbacks BEFORE exposing on window — avoids race where a
+      // download could fire progress/complete events with no listeners attached.
+      playlistDl.onProgress((playlistId) => {
+        downloadUI.updateDownloadButton(playlistId);
+        if (downloadUI.updateGlobalIndicator) downloadUI.updateGlobalIndicator();
+      });
+      playlistDl.onComplete((playlistId, success) => {
+        downloadUI.updateDownloadButton(playlistId);
+        if (downloadUI.updateGlobalIndicator) downloadUI.updateGlobalIndicator();
+        for (const sel of ['#btn-download-playlist', '#btn-album-download']) {
+          const btn = $(sel);
+          if (btn && btn.dataset.playlistId === playlistId) {
+            btn.classList.add('dl-completing');
+            btn.addEventListener('animationend', () => btn.classList.remove('dl-completing'), { once: true });
+          }
+        }
+        if (success) showToast(I18n.t('toast.playlistDownloaded'));
+        else showToast(I18n.t('toast.playlistDownloadPartial'));
+        renderLibrary();
+      });
+
+      window.__snowifyPlaylistDl = playlistDl;
+      window.__snowifyDownloadUI = downloadUI;
+
+      if (downloadUI.initGlobalIndicator) downloadUI.initGlobalIndicator();
     }
 
     initSettings().catch(err => {

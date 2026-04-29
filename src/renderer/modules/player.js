@@ -89,6 +89,14 @@ function _initEngine() {
       if (videoId) {
         const cached = prefetchCache.getCachedPath(videoId);
         if (cached) return pathToFileUrl(cached);
+        // Persistent download fallback (separate from prefetch cache)
+        const playlistDl = window.__snowifyPlaylistDl;
+        const dlPath = playlistDl?.getTrackPath(videoId);
+        if (dlPath) {
+          try {
+            if (await window.snowify.fileExists(dlPath)) return pathToFileUrl(dlPath);
+          } catch (_) {}
+        }
       }
       const track     = state.queue.find(t => t.url === url || (videoId && t.id === videoId));
       const trackMeta = track ? { title: track.title, artist: track.artist } : {};
@@ -190,7 +198,16 @@ export async function playTrack(track) {
       audio = engine.getActiveAudio();
       audioRef.audio = audio;
     } else {
-      const cachedPath = prefetchCache.getCachedPath(track.id);
+      let cachedPath = prefetchCache.getCachedPath(track.id);
+      // Persistent download fallback (separate from prefetch cache)
+      if (!cachedPath) {
+        const dlPath = window.__snowifyPlaylistDl?.getTrackPath(track.id);
+        if (dlPath) {
+          try {
+            if (await window.snowify.fileExists(dlPath)) cachedPath = dlPath;
+          } catch (_) {}
+        }
+      }
       if (!cachedPath) showToast(I18n.t('toast.loadingTrack', { title: track.title }));
       const directUrl = cachedPath
         ? pathToFileUrl(cachedPath)

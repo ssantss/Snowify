@@ -550,6 +550,18 @@ export function showPlaylistDetail(playlist, isLiked) {
       showToast(I18n.t('toast.deletedPlaylist', { name: playlist.name }));
     }
   };
+
+  // ─── Download button (playlist) ───
+  const dlBtn = document.querySelector('#btn-download-playlist');
+  const downloadUI = window.__snowifyDownloadUI;
+  if (dlBtn && downloadUI) {
+    const dlPlaylistId = isLiked ? 'liked' : playlist.id;
+    const dlTracks = isLiked ? state.likedSongs : playlist.tracks;
+    const plSubPath = 'Playlists/' + (playlist.name || 'Playlist').replace(/[/\\?%*:|"<>]/g, '_');
+    if (downloadUI.registerDownloadName) downloadUI.registerDownloadName(dlPlaylistId, playlist.name || 'Playlist');
+    downloadUI.wireDownloadButton(dlBtn, dlPlaylistId, dlTracks, plSubPath, true);
+    if (downloadUI.validateAndRefresh) downloadUI.validateAndRefresh(tracksContainer, dlPlaylistId);
+  }
 }
 
 // ─── showPlaylistTrackMenu ────────────────────────────────────────────────────

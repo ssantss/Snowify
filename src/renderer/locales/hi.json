@@ -630,5 +630,18 @@
   "toast.addedToClientFav": "{{name}} के पसंदीदा में जोड़ा गया",
   "toast.removedFromClientFav": "{{name}} के पसंदीदा से हटाया गया",
   "toast.clientFavInjected": "{{name}} के पसंदीदा कतार में जोड़े गए",
-  "toast.clientFavRemoved": "{{name}} के पसंदीदा कतार से हटाए गए"
+  "toast.clientFavRemoved": "{{name}} के पसंदीदा कतार से हटाए गए",
+
+  "playlist.download": "प्लेलिस्ट डाउनलोड करें",
+  "playlist.removeDownload": "डाउनलोड हटाएं",
+  "playlist.confirmRemoveDownload": "इस प्लेलिस्ट की सभी डाउनलोड की गई फ़ाइलें हटाएं?",
+  "context.showInFolder": "फ़ोल्डर में दिखाएं",
+  "toast.downloadCancelled": "डाउनलोड रद्द किया गया",
+  "toast.downloadRemoved": "डाउनलोड हटाए गए",
+  "toast.fileNotFound": "फ़ाइल नहीं मिली",
+  "toast.downloadStarted.one": "{{count}} ट्रैक डाउनलोड हो रहा है…",
+  "toast.downloadStarted.other": "{{count}} ट्रैक डाउनलोड हो रहे हैं…",
+  "toast.playlistDownloaded": "प्लेलिस्ट डाउनलोड हो गई",
+  "toast.playlistDownloadPartial": "कुछ ट्रैक विफल — प्लेलिस्ट आंशिक रूप से डाउनलोड हुई",
+  "downloads.active": "डाउनलोड"
 }

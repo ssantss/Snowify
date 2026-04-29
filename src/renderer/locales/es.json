@@ -630,5 +630,18 @@
   "toast.addedToClientFav": "Agregado a favoritos de {{name}}",
   "toast.removedFromClientFav": "Eliminado de favoritos de {{name}}",
   "toast.clientFavInjected": "Favoritos de {{name}} agregados a la cola",
-  "toast.clientFavRemoved": "Favoritos de {{name}} eliminados de la cola"
+  "toast.clientFavRemoved": "Favoritos de {{name}} eliminados de la cola",
+
+  "playlist.download": "Descargar playlist",
+  "playlist.removeDownload": "Eliminar descarga",
+  "playlist.confirmRemoveDownload": "¿Eliminar todos los archivos descargados de esta playlist?",
+  "context.showInFolder": "Mostrar en carpeta",
+  "toast.downloadCancelled": "Descarga cancelada",
+  "toast.downloadRemoved": "Descargas eliminadas",
+  "toast.fileNotFound": "Archivo no encontrado",
+  "toast.downloadStarted.one": "Descargando {{count}} pista…",
+  "toast.downloadStarted.other": "Descargando {{count}} pistas…",
+  "toast.playlistDownloaded": "Playlist descargada",
+  "toast.playlistDownloadPartial": "Algunas pistas fallaron — playlist parcialmente descargada",
+  "downloads.active": "Descargas"
 }

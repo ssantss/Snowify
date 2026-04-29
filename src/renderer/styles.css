@@ -8199,3 +8199,274 @@ body.i18n-switching { opacity: 0; }
 .platform-mobile .explore-section { padding: 0; }
 .platform-mobile .explore-section > h2 { padding: 0 var(--page-pad) 10px; }
 
+
+/* ─── Persistent Downloads (playlist/album/global indicator) ─── */
+.dl-collection-btn { position: relative; }
+
+.dl-btn-wrap {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dl-btn-wrap .dl-icon { position: absolute; }
+.dl-btn-wrap .dl-icon-done { display: none; }
+.dl-btn-wrap .dl-progress-ring { position: absolute; inset: 0; opacity: 0; transition: opacity 0.2s; }
+
+.dl-collection-btn.downloading .dl-progress-ring { opacity: 1; transform: scale(1.286); }
+.dl-collection-btn.downloaded .dl-icon-default { display: none; }
+.dl-collection-btn.downloaded .dl-icon-done { display: inline; }
+.dl-collection-btn.downloaded .dl-progress-ring { opacity: 0; }
+.dl-collection-btn.downloaded {
+  background: var(--accent);
+  color: #000;
+  border-radius: 50%;
+}
+.dl-collection-btn.downloaded:hover { background: var(--accent-hover, var(--accent)); color: #000; }
+
+.dl-ring-fill { transition: stroke-dashoffset 0.3s ease; }
+
+/* Icon pop on download complete */
+.dl-collection-btn.dl-completing .dl-icon-done {
+  animation: dl-icon-pop .4s .1s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes dl-icon-pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+/* Elastic scale on complete */
+.dl-collection-btn.dl-completing {
+  animation: save-elastic .5s cubic-bezier(.34,1.56,.64,1);
+}
+/* Burst rings */
+.dl-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 50%;
+}
+.dl-burst::before,
+.dl-burst::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0;
+}
+.dl-collection-btn.dl-completing .dl-burst::before {
+  animation: burst-ring .6s ease-out forwards;
+}
+.dl-collection-btn.dl-completing .dl-burst::after {
+  animation: burst-ring .6s .1s ease-out forwards;
+}
+/* Kick animation on download start */
+.dl-collection-btn.dl-starting {
+  animation: dl-start-kick .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes dl-start-kick {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.7); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+/* ─── Indeterminate loading spinner — waiting for first track ─── */
+.dl-collection-btn.dl-loading .dl-progress-ring {
+  animation: dl-spinner-rotate 2s linear infinite;
+}
+.dl-collection-btn.dl-loading .dl-ring-bg {
+  animation: dl-ring-breathe 2s ease-in-out infinite;
+}
+.dl-collection-btn.dl-loading .dl-ring-fill {
+  animation: dl-spinner-dash 1.5s ease-in-out infinite;
+}
+@keyframes dl-spinner-rotate {
+  0% { transform: scale(1.286) rotate(0deg); }
+  100% { transform: scale(1.286) rotate(360deg); }
+}
+@keyframes dl-ring-breathe {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.35; }
+}
+@keyframes dl-spinner-dash {
+  0%, 100% { stroke-dashoffset: 56.55; }
+  50% { stroke-dashoffset: 18.85; }
+}
+/* Fade out on remove download */
+.dl-collection-btn.dl-removing {
+  animation: save-fadeout .3s ease-out;
+}
+
+/* Downloaded badge on library cards */
+.lib-card-downloaded {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lib-card-downloaded svg { width: 12px; height: 12px; }
+.lib-card-cover { position: relative; }
+
+/* Per-track downloaded indicator */
+.track-dl-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.track-dl-icon:hover {
+  transform: scale(1.25);
+}
+.track-dl-icon:active {
+  transform: scale(0.9);
+}
+.track-dl-icon.dl-pop {
+  animation: dl-track-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes dl-track-pop {
+  0%   { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+.track-dl-icon svg {
+  fill: var(--accent);
+  stroke: none;
+}
+
+/* ─── Global Download Indicator (bottom bar) ─── */
+.global-dl-wrap {
+  position: relative;
+}
+.global-dl-wrap.hidden { display: none; }
+
+.global-dl-btn {
+  position: relative;
+}
+.global-dl-badge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background: var(--accent);
+  color: #000;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 8px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.global-dl-badge:empty { display: none; }
+
+.global-dl-btn.downloading svg {
+  animation: global-dl-pulse 1.8s ease-in-out infinite;
+}
+@keyframes global-dl-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.global-dl-popover {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: -8px;
+  width: 280px;
+  background: var(--bg-secondary, #1e1e1e);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  overflow: hidden;
+  animation: global-dl-enter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.global-dl-popover.hidden { display: none; }
+.global-dl-popover.closing {
+  animation: global-dl-exit 0.25s ease-out forwards;
+}
+
+@keyframes global-dl-enter {
+  0% { opacity: 0; transform: scale(0.9) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes global-dl-exit {
+  0% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.9) translateY(8px); }
+}
+
+.global-dl-header {
+  padding: 10px 14px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.global-dl-list {
+  padding: 4px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.global-dl-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.global-dl-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.global-dl-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary, #fff);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+.global-dl-item-count {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  flex-shrink: 0;
+}
+.global-dl-progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.global-dl-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Light theme overrides */
+[data-theme="light"] .global-dl-popover {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+[data-theme="light"] .global-dl-header { color: rgba(0, 0, 0, 0.45); }
+[data-theme="light"] .global-dl-item-name { color: #111; }
+[data-theme="light"] .global-dl-item-count { color: rgba(0, 0, 0, 0.4); }
+[data-theme="light"] .global-dl-progress { background: rgba(0, 0, 0, 0.08); }
+[data-theme="light"] .global-dl-badge { color: #fff; }
+

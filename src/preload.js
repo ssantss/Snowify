@@ -151,4 +151,16 @@ contextBridge.exposeInMainWorld('snowify', {
 
   // Generic HTTP GET for plugins (bypasses renderer CORS restrictions)
   httpGet: (url, headers) => ipcRenderer.invoke('net:httpGet', url, headers),
+
+  // ─── Persistent downloads (separate from prefetch cache) ───
+  downloadPlaylistTrack: (videoUrl, quality, videoId, playlistId, format, thumbnailUrl, title, artist, userFolder, includeArtist, trackNumber) =>
+    ipcRenderer.invoke('playlist:downloadTrack', videoUrl, quality, videoId, playlistId, format, thumbnailUrl, title, artist, userFolder, includeArtist, trackNumber),
+  cancelPlaylistDownload: () => ipcRenderer.invoke('playlist:cancelPlaylistDownload'),
+  deletePlaylistDownload: (playlistId, filePaths) => ipcRenderer.invoke('playlist:deleteDownload', playlistId, filePaths),
+  fileExists: (filePath) => ipcRenderer.invoke('fs:fileExists', filePath),
+  saveSongAs: (videoUrl, title, artist, thumbnailUrl, format) => ipcRenderer.invoke('song:saveAudioTo', videoUrl, title, artist, thumbnailUrl, format),
+  saveSongToFolder: (videoUrl, title, artist, thumbnailUrl, folderPath, format) => ipcRenderer.invoke('song:saveToFolder', videoUrl, title, artist, thumbnailUrl, folderPath, format),
+  pickDownloadFolder: () => ipcRenderer.invoke('config:pickDownloadFolder'),
+  getDefaultMusicDir: () => ipcRenderer.invoke('config:getDefaultMusicDir'),
+  showInFolder: (filePath) => ipcRenderer.invoke('shell:showInFolder', filePath),
 });

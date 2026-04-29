@@ -630,5 +630,18 @@
   "toast.addedToClientFav": "{{name}} favorilerine eklendi",
   "toast.removedFromClientFav": "{{name}} favorilerinden kaldırıldı",
   "toast.clientFavInjected": "{{name}} favorileri sıraya eklendi",
-  "toast.clientFavRemoved": "{{name}} favorileri sıradan kaldırıldı"
+  "toast.clientFavRemoved": "{{name}} favorileri sıradan kaldırıldı",
+
+  "playlist.download": "Çalma listesini indir",
+  "playlist.removeDownload": "İndirmeyi kaldır",
+  "playlist.confirmRemoveDownload": "Bu çalma listesindeki tüm indirilen dosyalar kaldırılsın mı?",
+  "context.showInFolder": "Klasörde göster",
+  "toast.downloadCancelled": "İndirme iptal edildi",
+  "toast.downloadRemoved": "İndirmeler kaldırıldı",
+  "toast.fileNotFound": "Dosya bulunamadı",
+  "toast.downloadStarted.one": "{{count}} parça indiriliyor…",
+  "toast.downloadStarted.other": "{{count}} parça indiriliyor…",
+  "toast.playlistDownloaded": "Çalma listesi indirildi",
+  "toast.playlistDownloadPartial": "Bazı parçalar başarısız — çalma listesi kısmen indirildi",
+  "downloads.active": "İndirmeler"
 }

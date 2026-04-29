@@ -48,6 +48,9 @@ const state = {
   // Client manager
   clients: [],
   clientsPresent: [],
+  // Persistent downloads (separate from prefetch cache)
+  downloadFolder: '',
+  downloadFormat: 'mp3',
 };
 
 export default state;

@@ -630,5 +630,18 @@
   "toast.addedToClientFav": "已添加到{{name}}的收藏",
   "toast.removedFromClientFav": "已从{{name}}的收藏中移除",
   "toast.clientFavInjected": "{{name}}的收藏已添加到队列",
-  "toast.clientFavRemoved": "{{name}}的收藏已从队列移除"
+  "toast.clientFavRemoved": "{{name}}的收藏已从队列移除",
+
+  "playlist.download": "下载播放列表",
+  "playlist.removeDownload": "移除下载",
+  "playlist.confirmRemoveDownload": "移除此播放列表的所有已下载文件？",
+  "context.showInFolder": "在文件夹中显示",
+  "toast.downloadCancelled": "下载已取消",
+  "toast.downloadRemoved": "下载已移除",
+  "toast.fileNotFound": "找不到文件",
+  "toast.downloadStarted.one": "正在下载{{count}}首曲目…",
+  "toast.downloadStarted.other": "正在下载{{count}}首曲目…",
+  "toast.playlistDownloaded": "播放列表已下载",
+  "toast.playlistDownloadPartial": "部分曲目失败 — 播放列表已部分下载",
+  "downloads.active": "下载"
 }
