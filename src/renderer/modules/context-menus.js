@@ -36,8 +36,11 @@ function trackPlaysLabel(track) {
 // Optional 5th arg: contextMenuCb(e, track, idx) — overrides default showContextMenu.
 // Used by playlist detail view to show the "remove from playlist" menu.
 export function renderTrackList(container, tracks, context, sourcePlaylistId = null, contextMenuCb = null) {
-  const isArtistCtx = context === 'artist-popular';
-  const _likedIds   = new Set(state.likedSongs.map(t => t.id));
+  const isArtistCtx  = context === 'artist-popular';
+  // Explore contexts: row click does NOT auto-play; user must click the
+  // thumbnail (with hover overlay) or one of the kbd-style action badges.
+  const isExploreCtx = context === 'search' || context === 'client';
+  const _likedIds    = new Set(state.likedSongs.map(t => t.id));
 
   const headerHtml = `<div class="track-list-header">
     <span>#</span>
@@ -45,6 +48,18 @@ export function renderTrackList(container, tracks, context, sourcePlaylistId = n
     ${!isArtistCtx ? `<span>${I18n.t('trackList.artist')}</span>` : ''}
     <span></span>
   </div>`;
+
+  const exploreActionsHtml = isExploreCtx
+    ? `<div class="track-explore-actions">
+        <button class="track-radio-btn" title="${I18n.t('context.startRadio')}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49"/><path d="M7.76 16.24a6 6 0 0 1 0-8.49"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/></svg></button>
+        <button class="track-play-next-btn">${I18n.t('context.playNext')}</button>
+        <button class="track-add-queue-btn">${I18n.t('context.addToQueue')}</button>
+      </div>`
+    : '';
+
+  const thumbOverlayHtml = isExploreCtx
+    ? `<div class="track-thumb-overlay"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7L8 5z"/></svg></div>`
+    : '';
 
   // ── Row HTML builder (reads currentId live so highlight is always fresh) ──
   function buildRow(track, i) {
@@ -58,12 +73,16 @@ export function renderTrackList(container, tracks, context, sourcePlaylistId = n
         <span class="track-num-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg></span>
       </div>
       <div class="track-main">
-        <img class="track-thumb" data-src="${escapeHtml(resolveImageUrl(track.thumbnail || (track.isLocal ? LOCAL_THUMB_FALLBACK : '')) || '')}" alt="" />
+        <div class="track-thumb-wrap${isExploreCtx ? ' explore' : ''}">
+          <img class="track-thumb" data-src="${escapeHtml(resolveImageUrl(track.thumbnail || (track.isLocal ? LOCAL_THUMB_FALLBACK : '')) || '')}" alt="" />
+          ${thumbOverlayHtml}
+        </div>
         <div class="track-details">
           <div class="track-title">${escapeHtml(track.title)}${track.isLocal ? '<span class="local-badge">LOCAL</span>' : ''}</div>
           ${playsText ? `<div class="track-inline-plays">${escapeHtml(playsText)}</div>` : ''}
           ${!isArtistCtx && track.artist ? `<div class="track-artist-sub">${escapeHtml(track.artist)}</div>` : ''}
         </div>
+        ${exploreActionsHtml}
       </div>
       ${!isArtistCtx ? `<div class="track-artist-col">${renderArtistLinks(track)}</div>` : ''}
       <div class="track-like-col">
@@ -95,12 +114,49 @@ export function renderTrackList(container, tracks, context, sourcePlaylistId = n
       // Artist link
       const link = e.target.closest('.artist-link[data-artist-id]');
       if (link) { e.stopPropagation(); openArtistPage(link.dataset.artistId); return; }
-      // Row play
+
+      // Explore-context action badges (search/client rows)
+      const radioBtn = e.target.closest('.track-radio-btn');
+      if (radioBtn) {
+        e.stopPropagation();
+        const row = radioBtn.closest('.track-row');
+        if (!row) return;
+        const track = tracks[parseInt(row.dataset.index)];
+        if (track) startRadio(track);
+        return;
+      }
+      const playNextBtn = e.target.closest('.track-play-next-btn');
+      if (playNextBtn) {
+        e.stopPropagation();
+        const row = playNextBtn.closest('.track-row');
+        if (!row) return;
+        const track = tracks[parseInt(row.dataset.index)];
+        if (track) handlePlayNext(track);
+        return;
+      }
+      const addQueueBtn = e.target.closest('.track-add-queue-btn');
+      if (addQueueBtn) {
+        e.stopPropagation();
+        const row = addQueueBtn.closest('.track-row');
+        if (!row) return;
+        const track = tracks[parseInt(row.dataset.index)];
+        if (track) handleAddToQueue(track);
+        return;
+      }
+
+      // Row play (or thumbnail overlay in explore contexts)
       const row = e.target.closest('.track-row');
       if (!row) return;
       const idx = parseInt(row.dataset.index);
       const track = tracks[idx];
       if (!track) return;
+      if (isExploreCtx) {
+        // Only the thumbnail wrap triggers play — clicking elsewhere on the row
+        // does nothing (user must use one of the explicit action badges).
+        const thumbWrap = e.target.closest('.track-thumb-wrap.explore');
+        if (thumbWrap) playFromList([track], 0);
+        return;
+      }
       if (context === 'playlist' || context === 'album') playFromList(tracks, idx, sourcePlaylistId);
       else playFromList([track], 0);
     });
