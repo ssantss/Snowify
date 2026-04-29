@@ -607,5 +607,18 @@
   "toast.trackReplacedEverywhere": "{{count}} yerde değiştirildi",
   "welcome.enterEmailForReset": "Şifrenizi sıfırlamak için e-posta adresinizi girin",
   "welcome.forgotPassword": "Şifrenizi mi unuttunuz?",
-  "welcome.resetEmailSent": "Şifre sıfırlama e-postası gönderildi — gelen kutunuzu (ve spam klasörünü) kontrol edin"
+  "welcome.resetEmailSent": "Şifre sıfırlama e-postası gönderildi — gelen kutunuzu (ve spam klasörünü) kontrol edin",
+
+  "playlist.download": "Çalma listesini indir",
+  "playlist.removeDownload": "İndirmeyi kaldır",
+  "playlist.confirmRemoveDownload": "Bu çalma listesindeki tüm indirilen dosyalar kaldırılsın mı?",
+  "context.showInFolder": "Klasörde göster",
+  "toast.downloadCancelled": "İndirme iptal edildi",
+  "toast.downloadRemoved": "İndirmeler kaldırıldı",
+  "toast.fileNotFound": "Dosya bulunamadı",
+  "toast.downloadStarted.one": "{{count}} parça indiriliyor…",
+  "toast.downloadStarted.other": "{{count}} parça indiriliyor…",
+  "toast.playlistDownloaded": "Çalma listesi indirildi",
+  "toast.playlistDownloadPartial": "Bazı parçalar başarısız — çalma listesi kısmen indirildi",
+  "downloads.active": "İndirmeler"
 }

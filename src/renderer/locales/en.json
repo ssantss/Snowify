@@ -617,5 +617,18 @@
   "replace.pickOne": "Pick a version to replace this track",
   "toast.trackReplaced": "Track replaced",
   "toast.trackReplacedEverywhere": "Replaced in {{count}} places",
-  "toast.playingSelectedVersion": "Playing selected version"
+  "toast.playingSelectedVersion": "Playing selected version",
+
+  "playlist.download": "Download playlist",
+  "playlist.removeDownload": "Remove download",
+  "playlist.confirmRemoveDownload": "Remove all downloaded files for this playlist?",
+  "context.showInFolder": "Show in folder",
+  "toast.downloadCancelled": "Download cancelled",
+  "toast.downloadRemoved": "Downloads removed",
+  "toast.fileNotFound": "File not found",
+  "toast.downloadStarted.one": "Downloading {{count}} track…",
+  "toast.downloadStarted.other": "Downloading {{count}} tracks…",
+  "toast.playlistDownloaded": "Playlist downloaded",
+  "toast.playlistDownloadPartial": "Some tracks failed — playlist partially downloaded",
+  "downloads.active": "Downloads"
 }

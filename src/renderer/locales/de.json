@@ -607,5 +607,18 @@
   "toast.trackReplacedEverywhere": "An {{count}} Stellen ersetzt",
   "welcome.enterEmailForReset": "Gib deine E-Mail-Adresse ein, um dein Passwort zurückzusetzen",
   "welcome.forgotPassword": "Passwort vergessen?",
-  "welcome.resetEmailSent": "E-Mail zum Zurücksetzen gesendet — überprüfe deinen Posteingang (und Spam)"
+  "welcome.resetEmailSent": "E-Mail zum Zurücksetzen gesendet — überprüfe deinen Posteingang (und Spam)",
+
+  "playlist.download": "Playlist herunterladen",
+  "playlist.removeDownload": "Download entfernen",
+  "playlist.confirmRemoveDownload": "Alle heruntergeladenen Dateien dieser Playlist entfernen?",
+  "context.showInFolder": "Im Ordner anzeigen",
+  "toast.downloadCancelled": "Download abgebrochen",
+  "toast.downloadRemoved": "Downloads entfernt",
+  "toast.fileNotFound": "Datei nicht gefunden",
+  "toast.downloadStarted.one": "Lade {{count}} Track herunter…",
+  "toast.downloadStarted.other": "Lade {{count}} Tracks herunter…",
+  "toast.playlistDownloaded": "Playlist heruntergeladen",
+  "toast.playlistDownloadPartial": "Einige Tracks fehlgeschlagen — Playlist teilweise heruntergeladen",
+  "downloads.active": "Downloads"
 }

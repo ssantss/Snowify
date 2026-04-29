@@ -69,6 +69,7 @@ const { initAutoUpdater, register: registerUpdater } = require('./main/updater')
 const { register: registerLyrics } = require('./main/lyrics');
 const { register: registerMedia } = require('./main/media');
 const { register: registerCloudAuth } = require('./main/cloud-auth');
+const { register: registerDownloads } = require('./main/downloads');
 
 // ─── App lifecycle ───
 app.whenReady().then(async () => {
@@ -90,6 +91,7 @@ app.whenReady().then(async () => {
   registerLyrics(ipcMain);
   registerMedia(ipcMain, ctx);
   registerCloudAuth(ipcMain, ctx);
+  registerDownloads(ipcMain, ctx);
 
   try {
     await initYTMusic(ctx);

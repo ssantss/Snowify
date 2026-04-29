@@ -89,6 +89,14 @@ function _initEngine() {
       if (videoId) {
         const cached = prefetchCache.getCachedPath(videoId);
         if (cached) return pathToFileUrl(cached);
+        // Persistent download fallback (separate from prefetch cache)
+        const playlistDl = window.__snowifyPlaylistDl;
+        const dlPath = playlistDl?.getTrackPath(videoId);
+        if (dlPath) {
+          try {
+            if (await window.snowify.fileExists(dlPath)) return pathToFileUrl(dlPath);
+          } catch (_) {}
+        }
       }
       const track     = state.queue.find(t => t.url === url || (videoId && t.id === videoId));
       const trackMeta = track ? { title: track.title, artist: track.artist } : {};

@@ -248,6 +248,15 @@
           <button class="icon-btn playlist-action-btn" id="btn-shuffle-playlist" data-i18n-title="playlist.shufflePlay" title="Shuffle play">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
           </button>
+          <button class="icon-btn playlist-action-btn dl-collection-btn" id="btn-download-playlist" data-i18n-title="playlist.download" title="Download playlist">
+            <svg class="dl-progress-ring" width="22" height="22" viewBox="0 0 28 28">
+              <circle class="dl-ring-bg" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" opacity="0.15"/>
+              <circle class="dl-ring-fill" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="75.4" stroke-dashoffset="75.4" transform="rotate(-90 14 14)"/>
+            </svg>
+            <svg class="dl-icon-default" width="16" height="16" viewBox="2 2 20 16" fill="currentColor"><path d="M12 18l-8-8h5V2h6v8h5l-8 8z"/></svg>
+            <svg class="dl-icon-done" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="dl-burst"></span>
+          </button>
           <span class="playlist-actions-spacer"></span>
           <button class="btn-setting-action playlist-files-btn" id="btn-import-folder" data-i18n="playlist.updateFiles" title="Update Files" style="display:none">Update Files</button>
           <button class="icon-btn playlist-action-btn btn-delete" id="btn-delete-playlist" data-i18n-title="playlist.delete" title="Delete playlist">
@@ -278,6 +287,15 @@
           </button>
           <button class="icon-btn playlist-action-btn" id="btn-album-save" title="Save to library" data-i18n-title="context.saveToLibrary" style="display:none;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <button class="icon-btn playlist-action-btn dl-collection-btn" id="btn-album-download" data-i18n-title="playlist.download" title="Download">
+            <svg class="dl-progress-ring" width="22" height="22" viewBox="0 0 28 28">
+              <circle class="dl-ring-bg" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" opacity="0.15"/>
+              <circle class="dl-ring-fill" cx="14" cy="14" r="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="75.4" stroke-dashoffset="75.4" transform="rotate(-90 14 14)"/>
+            </svg>
+            <svg class="dl-icon-default" width="16" height="16" viewBox="2 2 20 16" fill="currentColor"><path d="M12 18l-8-8h5V2h6v8h5l-8 8z"/></svg>
+            <svg class="dl-icon-done" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="dl-burst"></span>
           </button>
         </div>
         <div id="album-tracks" class="track-list"></div>
@@ -1016,6 +1034,16 @@
       <button class="icon-btn" id="btn-queue" data-i18n-title="player.queue" title="Queue">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h10v2H4v-2zm14-1v6l5-3-5-3z"/></svg>
       </button>
+      <div class="global-dl-wrap hidden" id="global-dl-wrap">
+        <button class="icon-btn global-dl-btn" id="btn-global-dl" data-i18n-title="downloads.active" title="Downloads">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span class="global-dl-badge" id="global-dl-badge"></span>
+        </button>
+        <div class="global-dl-popover hidden" id="global-dl-popover">
+          <div class="global-dl-header"><span data-i18n="downloads.active">Downloads</span></div>
+          <div class="global-dl-list" id="global-dl-list"></div>
+        </div>
+      </div>
       <div class="volume-control">
         <button class="icon-btn" id="btn-volume" title="Volume" data-i18n-title="player.volume">
           <svg class="vol-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path class="vol-wave" d="M14 9.64a3.99 3.99 0 010 4.72M16.5 7a7.97 7.97 0 010 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
@@ -1348,6 +1376,8 @@
   <script src="loudness-normalizer.js"></script>
   <script src="prefetch-cache.js"></script>
   <script src="wrapped.js"></script>
+  <script src="playlist-downloads.js"></script>
+  <script src="download-ui.js"></script>
   <script type="module" src="app.js"></script>
 </body>
 </html>

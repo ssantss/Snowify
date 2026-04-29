@@ -44,7 +44,10 @@ const state = {
   playLog: [],
   wrappedShownYear: null,
   // Spotify genre cache — stored in a separate localStorage key
-  trackGenreCache: {}
+  trackGenreCache: {},
+  // Persistent downloads (separate from prefetch cache)
+  downloadFolder: '',
+  downloadFormat: 'mp3',
 };
 
 export default state;

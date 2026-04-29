@@ -759,6 +759,8 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         songSources: state.songSources,
         metadataSources: state.metadataSources,
         wrappedShownYear: state.wrappedShownYear,
+        downloadFolder: state.downloadFolder,
+        downloadFormat: state.downloadFormat,
       }));
       localStorage.setItem('snowify_lastSave', String(Date.now()));
     } catch (e) {
@@ -837,6 +839,8 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         state.songSources = saved.songSources || ['youtube'];
         state.metadataSources = saved.metadataSources || ['youtube'];
         state.wrappedShownYear = saved.wrappedShownYear ?? null;
+        state.downloadFolder = saved.downloadFolder || '';
+        state.downloadFormat = saved.downloadFormat || 'mp3';
 
         // Persist once after deproxying old mobile proxy URLs in local state.
         if (JSON.stringify(rawSaved) !== JSON.stringify(saved)) {
@@ -1183,6 +1187,47 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
     renderPlaylists();
     renderSidebarArtists();
     renderHome();
+
+    // ─── Persistent Downloads (PlaylistDownloadManager + DownloadUI) ───
+    if (window.PlaylistDownloadManager && window.DownloadUI) {
+      const playlistDl = window.PlaylistDownloadManager({
+        getState: () => state,
+        downloadTrack: (url, q, id, plId, format, thumbnailUrl, title, artist, userFolder, includeArtist, trackNumber) =>
+          window.snowify.downloadPlaylistTrack(url, q, id, plId, format, thumbnailUrl, title, artist, userFolder, includeArtist, trackNumber),
+        cancelDownload: () => window.snowify.cancelPlaylistDownload(),
+        deleteDownload: (plId, filePaths) => window.snowify.deletePlaylistDownload(plId, filePaths),
+      });
+      window.__snowifyPlaylistDl = playlistDl;
+
+      const downloadUI = window.DownloadUI({
+        playlistDl, showToast, I18n, $, renderLibrary,
+        getDownloadFolder: async () => state.downloadFolder || (await window.snowify.getDefaultMusicDir()),
+        fileExists: (p) => window.snowify.fileExists(p),
+      });
+      window.__snowifyDownloadUI = downloadUI;
+
+      playlistDl.onProgress((playlistId) => {
+        downloadUI.updateDownloadButton(playlistId);
+        if (downloadUI.updateGlobalIndicator) downloadUI.updateGlobalIndicator();
+      });
+      playlistDl.onComplete((playlistId, success) => {
+        downloadUI.updateDownloadButton(playlistId);
+        if (downloadUI.updateGlobalIndicator) downloadUI.updateGlobalIndicator();
+        for (const sel of ['#btn-download-playlist', '#btn-album-download']) {
+          const btn = $(sel);
+          if (btn && btn.dataset.playlistId === playlistId) {
+            btn.classList.add('dl-completing');
+            btn.addEventListener('animationend', () => btn.classList.remove('dl-completing'), { once: true });
+          }
+        }
+        if (success) showToast(I18n.t('toast.playlistDownloaded'));
+        else showToast(I18n.t('toast.playlistDownloadPartial'));
+        renderLibrary();
+      });
+
+      if (downloadUI.initGlobalIndicator) downloadUI.initGlobalIndicator();
+    }
+
     initSettings().catch(err => {
       console.error('[initSettings crashed]', err);
       showToast('Settings error: ' + err.message);

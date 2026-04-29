@@ -70,6 +70,18 @@ export async function showAlbumDetail(albumId, albumMeta) {
   };
 
   setupSaveButton(saveBtn, albumId, album.name || albumMeta?.name || I18n.t('album.type'), album.tracks);
+
+  // ─── Download button (album) ───
+  const albumDlBtn = document.querySelector('#btn-album-download');
+  const downloadUI = window.__snowifyDownloadUI;
+  if (albumDlBtn && downloadUI) {
+    const safeArtist = (album.artist || 'Unknown Artist').replace(/[/\\?%*:|"<>]/g, '_');
+    const safeAlbum  = (album.name || albumMeta?.name || 'Album').replace(/[/\\?%*:|"<>]/g, '_');
+    const dlId = 'album-' + albumId;
+    if (downloadUI.registerDownloadName) downloadUI.registerDownloadName(dlId, album.name || albumMeta?.name || 'Album');
+    downloadUI.wireDownloadButton(albumDlBtn, dlId, album.tracks, safeArtist + '/' + safeAlbum, false);
+    if (downloadUI.validateAndRefresh) downloadUI.validateAndRefresh(tracksContainer, dlId);
+  }
 }
 
 // ─── showExternalPlaylistDetail ───────────────────────────────────────────────
@@ -118,4 +130,15 @@ export async function showExternalPlaylistDetail(playlistId, meta) {
   };
 
   setupSaveButton(saveBtn, playlistId, meta?.name || I18n.t('playlist.type'), tracks);
+
+  // ─── Download button (external playlist) ───
+  const extDlBtn = document.querySelector('#btn-album-download');
+  const downloadUI = window.__snowifyDownloadUI;
+  if (extDlBtn && downloadUI) {
+    const dlId = 'extpl-' + playlistId;
+    const extPlName = 'Playlists/' + (meta?.name || 'Playlist').replace(/[/\\?%*:|"<>]/g, '_');
+    if (downloadUI.registerDownloadName) downloadUI.registerDownloadName(dlId, meta?.name || 'Playlist');
+    downloadUI.wireDownloadButton(extDlBtn, dlId, tracks, extPlName, true);
+    if (downloadUI.validateAndRefresh) downloadUI.validateAndRefresh(tracksContainer, dlId);
+  }
 }

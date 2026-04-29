@@ -607,5 +607,18 @@
   "toast.trackReplacedEverywhere": "{{count}}箇所で置き換えました",
   "welcome.enterEmailForReset": "パスワードをリセットするにはメールアドレスを入力してください",
   "welcome.forgotPassword": "パスワードを忘れた場合",
-  "welcome.resetEmailSent": "パスワードリセットメールを送信しました — 受信トレイ（とスパムフォルダ）を確認してください"
+  "welcome.resetEmailSent": "パスワードリセットメールを送信しました — 受信トレイ（とスパムフォルダ）を確認してください",
+
+  "playlist.download": "プレイリストをダウンロード",
+  "playlist.removeDownload": "ダウンロードを削除",
+  "playlist.confirmRemoveDownload": "このプレイリストのダウンロードファイルをすべて削除しますか？",
+  "context.showInFolder": "フォルダで表示",
+  "toast.downloadCancelled": "ダウンロードがキャンセルされました",
+  "toast.downloadRemoved": "ダウンロードが削除されました",
+  "toast.fileNotFound": "ファイルが見つかりません",
+  "toast.downloadStarted.one": "{{count}}曲をダウンロード中…",
+  "toast.downloadStarted.other": "{{count}}曲をダウンロード中…",
+  "toast.playlistDownloaded": "プレイリストをダウンロードしました",
+  "toast.playlistDownloadPartial": "一部の曲が失敗 — プレイリストを部分的にダウンロードしました",
+  "downloads.active": "ダウンロード"
 }

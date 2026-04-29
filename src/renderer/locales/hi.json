@@ -607,5 +607,18 @@
   "toast.trackReplacedEverywhere": "{{count}} जगहों पर बदला गया",
   "welcome.enterEmailForReset": "अपना पासवर्ड रीसेट करने के लिए अपना ईमेल पता दर्ज करें",
   "welcome.forgotPassword": "पासवर्ड भूल गए?",
-  "welcome.resetEmailSent": "पासवर्ड रीसेट ईमेल भेजा गया — अपना इनबॉक्स (और स्पैम फ़ोल्डर) जांचें"
+  "welcome.resetEmailSent": "पासवर्ड रीसेट ईमेल भेजा गया — अपना इनबॉक्स (और स्पैम फ़ोल्डर) जांचें",
+
+  "playlist.download": "प्लेलिस्ट डाउनलोड करें",
+  "playlist.removeDownload": "डाउनलोड हटाएं",
+  "playlist.confirmRemoveDownload": "इस प्लेलिस्ट की सभी डाउनलोड की गई फ़ाइलें हटाएं?",
+  "context.showInFolder": "फ़ोल्डर में दिखाएं",
+  "toast.downloadCancelled": "डाउनलोड रद्द किया गया",
+  "toast.downloadRemoved": "डाउनलोड हटाए गए",
+  "toast.fileNotFound": "फ़ाइल नहीं मिली",
+  "toast.downloadStarted.one": "{{count}} ट्रैक डाउनलोड हो रहा है…",
+  "toast.downloadStarted.other": "{{count}} ट्रैक डाउनलोड हो रहे हैं…",
+  "toast.playlistDownloaded": "प्लेलिस्ट डाउनलोड हो गई",
+  "toast.playlistDownloadPartial": "कुछ ट्रैक विफल — प्लेलिस्ट आंशिक रूप से डाउनलोड हुई",
+  "downloads.active": "डाउनलोड"
 }

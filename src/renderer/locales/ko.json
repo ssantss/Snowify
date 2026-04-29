@@ -607,5 +607,18 @@
   "toast.trackReplacedEverywhere": "{{count}}곳에서 교체됨",
   "welcome.enterEmailForReset": "비밀번호를 재설정하려면 이메일 주소를 입력하세요",
   "welcome.forgotPassword": "비밀번호를 잊으셨나요?",
-  "welcome.resetEmailSent": "비밀번호 재설정 이메일이 전송됨 — 받은편지함(및 스팸 폴더)을 확인하세요"
+  "welcome.resetEmailSent": "비밀번호 재설정 이메일이 전송됨 — 받은편지함(및 스팸 폴더)을 확인하세요",
+
+  "playlist.download": "플레이리스트 다운로드",
+  "playlist.removeDownload": "다운로드 삭제",
+  "playlist.confirmRemoveDownload": "이 플레이리스트의 다운로드된 파일을 모두 삭제하시겠습니까?",
+  "context.showInFolder": "폴더에서 표시",
+  "toast.downloadCancelled": "다운로드가 취소되었습니다",
+  "toast.downloadRemoved": "다운로드가 삭제되었습니다",
+  "toast.fileNotFound": "파일을 찾을 수 없습니다",
+  "toast.downloadStarted.one": "{{count}}곡 다운로드 중…",
+  "toast.downloadStarted.other": "{{count}}곡 다운로드 중…",
+  "toast.playlistDownloaded": "플레이리스트가 다운로드되었습니다",
+  "toast.playlistDownloadPartial": "일부 트랙 실패 — 플레이리스트가 부분적으로 다운로드되었습니다",
+  "downloads.active": "다운로드"
 }
