@@ -8018,3 +8018,76 @@ body.i18n-switching { opacity: 0; }
 .platform-mobile .explore-section { padding: 0; }
 .platform-mobile .explore-section > h2 { padding: 0 var(--page-pad) 10px; }
 
+
+/* ─── Explicit play UX (search & client rows) ─── */
+.track-thumb-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.track-thumb-wrap.explore { cursor: pointer; }
+.track-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+.track-row:hover .track-thumb-wrap.explore .track-thumb-overlay { opacity: 1; }
+.track-row:hover .track-thumb-wrap.explore .track-thumb { transform: none; }
+
+/* Action badges (radio / play-next / add-queue) */
+.track-explore-actions {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.track-row:hover .track-explore-actions { display: flex; }
+.track-radio-btn,
+.track-play-next-btn,
+.track-add-queue-btn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-family: inherit;
+  color: var(--text-subdued);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 1px 6px;
+  line-height: 1.2;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color var(--transition), background var(--transition), border-color var(--transition);
+}
+.track-radio-btn { padding: 2px 4px; }
+.track-radio-btn:hover,
+.track-play-next-btn:hover,
+.track-add-queue-btn:hover {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+[data-theme="light"] .track-radio-btn,
+[data-theme="light"] .track-play-next-btn,
+[data-theme="light"] .track-add-queue-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Explore rows: row click does nothing — hide the "play" hover hint on track number */
+.track-row[data-context="search"]:hover .track-num-play,
+.track-row[data-context="client"]:hover .track-num-play { display: none !important; }
+.track-row[data-context="search"]:hover .track-num-text,
+.track-row[data-context="client"]:hover .track-num-text { display: inline; }
