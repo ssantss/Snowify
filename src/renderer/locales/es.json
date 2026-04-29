@@ -608,7 +608,6 @@
   "welcome.enterEmailForReset": "Ingresa tu correo electrónico para restablecer tu contraseña",
   "welcome.forgotPassword": "¿Olvidaste tu contraseña?",
   "welcome.resetEmailSent": "Correo de restablecimiento enviado — revisa tu bandeja de entrada (y spam)",
-
   "playlist.download": "Descargar playlist",
   "playlist.removeDownload": "Eliminar descarga",
   "playlist.confirmRemoveDownload": "¿Eliminar todos los archivos descargados de esta playlist?",
@@ -616,9 +615,19 @@
   "toast.downloadCancelled": "Descarga cancelada",
   "toast.downloadRemoved": "Descargas eliminadas",
   "toast.fileNotFound": "Archivo no encontrado",
-  "toast.downloadStarted.one": "Descargando {{count}} pista…",
-  "toast.downloadStarted.other": "Descargando {{count}} pistas…",
+  "toast.downloadStarted.one": "Descargando {{count}} canción…",
+  "toast.downloadStarted.other": "Descargando {{count}} canciones…",
   "toast.playlistDownloaded": "Playlist descargada",
   "toast.playlistDownloadPartial": "Algunas pistas fallaron — playlist parcialmente descargada",
-  "downloads.active": "Descargas"
+  "downloads.active": "Descargas",
+  "settings.downloadFormat": "Formato de descarga",
+  "settings.downloadFormatDesc": "Formato usado para descargas offline de canciones y playlists",
+  "settings.downloadFolder": "Carpeta de descargas",
+  "settings.browse": "Explorar",
+  "settings.reset": "Restablecer",
+  "toast.downloadFolderReset": "Carpeta de descargas restablecida",
+  "context.downloadSong": "Descargar canción",
+  "toast.songSaved": "Canción guardada",
+  "toast.songSaveError": "No se pudo guardar la canción",
+  "player.saveSong": "Guardar canción"
 }

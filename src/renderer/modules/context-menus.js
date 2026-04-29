@@ -431,7 +431,8 @@ export function showContextMenu(e, track, { hideAddQueue = false, hidePlayNext =
     ${isLocal ? '' : `<div class="context-menu-item" data-action="watch-video">${I18n.t('context.watchVideo')}</div>`}
     <div class="context-menu-item" data-action="like">${isLiked ? I18n.t('context.unlike') : I18n.t('context.like')}</div>
     ${playlistSection}
-    ${isLocal ? '' : `<div class="context-menu-divider"></div><div class="context-menu-item" data-action="share">${I18n.t('context.copyLink')}</div>`}
+    ${isLocal ? '' : `<div class="context-menu-divider"></div><div class="context-menu-item" data-action="download-song">${I18n.t('context.downloadSong')}</div>`}
+    ${isLocal ? '' : `<div class="context-menu-item" data-action="share">${I18n.t('context.copyLink')}</div>`}
     ${isDevMode ? `<div class="context-menu-divider"></div><div class="context-menu-item ctx-dev-item" data-action="force-reload">${I18n.t('context.forceReload')}</div>` : ''}
   `;
 
@@ -497,6 +498,21 @@ export function showContextMenu(e, track, { hideAddQueue = false, hidePlayNext =
         navigator.clipboard.writeText(`https://snowify.cc/track/${track.id}`);
         showToast(I18n.t('toast.linkCopied'));
         break;
+      case 'download-song': {
+        try {
+          const folder = state.downloadFolder || (await window.snowify.getDefaultMusicDir());
+          const result = await window.snowify.saveSongToFolder(track.url, track.title, track.artist, track.thumbnail, folder, state.downloadFormat || 'mp3');
+          if (result?.success) {
+            showToast(I18n.t('toast.songSaved'), { label: I18n.t('context.showInFolder'), onClick: () => window.snowify.showInFolder(result.filePath) });
+          } else if (result?.error) {
+            showToast(I18n.t('toast.songSaveError'));
+          }
+        } catch (err) {
+          console.warn('download-song failed:', err);
+          showToast(I18n.t('toast.songSaveError'));
+        }
+        break;
+      }
       case 'force-reload':
         callbacks.forceReloadTrack(track);
         showToast(I18n.t('toast.reloading'));

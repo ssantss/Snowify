@@ -608,7 +608,6 @@
   "welcome.enterEmailForReset": "अपना पासवर्ड रीसेट करने के लिए अपना ईमेल पता दर्ज करें",
   "welcome.forgotPassword": "पासवर्ड भूल गए?",
   "welcome.resetEmailSent": "पासवर्ड रीसेट ईमेल भेजा गया — अपना इनबॉक्स (और स्पैम फ़ोल्डर) जांचें",
-
   "playlist.download": "प्लेलिस्ट डाउनलोड करें",
   "playlist.removeDownload": "डाउनलोड हटाएं",
   "playlist.confirmRemoveDownload": "इस प्लेलिस्ट की सभी डाउनलोड की गई फ़ाइलें हटाएं?",
@@ -620,5 +619,15 @@
   "toast.downloadStarted.other": "{{count}} ट्रैक डाउनलोड हो रहे हैं…",
   "toast.playlistDownloaded": "प्लेलिस्ट डाउनलोड हो गई",
   "toast.playlistDownloadPartial": "कुछ ट्रैक विफल — प्लेलिस्ट आंशिक रूप से डाउनलोड हुई",
-  "downloads.active": "डाउनलोड"
+  "downloads.active": "डाउनलोड",
+  "settings.downloadFormat": "डाउनलोड प्रारूप",
+  "settings.downloadFormatDesc": "ऑफ़लाइन गाने और प्लेलिस्ट डाउनलोड के लिए प्रारूप",
+  "settings.downloadFolder": "डाउनलोड फ़ोल्डर",
+  "settings.browse": "ब्राउज़",
+  "settings.reset": "रीसेट",
+  "toast.downloadFolderReset": "डाउनलोड फ़ोल्डर रीसेट किया गया",
+  "context.downloadSong": "गाना डाउनलोड करें",
+  "toast.songSaved": "गाना सहेजा गया",
+  "toast.songSaveError": "गाना सहेजा नहीं जा सका",
+  "player.saveSong": "गाना सहेजें"
 }

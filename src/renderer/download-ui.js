@@ -118,10 +118,6 @@ window.DownloadUI = function DownloadUI(opts) {
       try {
         if (playlistDl.isDownloaded(collectionId)) {
           if (confirm(I18n.t('playlist.confirmRemoveDownload'))) {
-            btn.classList.add('dl-removing');
-            btn.addEventListener('animationend', () => {
-              btn.classList.remove('dl-removing', 'downloaded');
-            }, { once: true });
             await playlistDl.removeDownload(collectionId);
             btn.closest('.view')?.querySelector('.track-list')
               ?.querySelectorAll('.track-dl-icon').forEach(el => el.remove());
@@ -138,8 +134,7 @@ window.DownloadUI = function DownloadUI(opts) {
             syncDownloadButton(btn, null);
             showToast(I18n.t('toast.downloadCancelled'));
           } else {
-            btn.classList.add('dl-starting', 'downloading', 'dl-loading');
-            btn.addEventListener('animationend', () => btn.classList.remove('dl-starting'), { once: true });
+            btn.classList.add('downloading', 'dl-loading');
             showToast(I18n.tp('toast.downloadStarted', tracks.length));
             const baseFolder = await getDownloadFolder();
             const userFolder = subPath ? baseFolder + '/' + subPath : baseFolder;

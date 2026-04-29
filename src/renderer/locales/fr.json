@@ -608,7 +608,6 @@
   "welcome.enterEmailForReset": "Entrez votre adresse e-mail pour réinitialiser votre mot de passe",
   "welcome.forgotPassword": "Mot de passe oublié ?",
   "welcome.resetEmailSent": "E-mail de réinitialisation envoyé — vérifiez votre boîte de réception (et les spams)",
-
   "playlist.download": "Télécharger la playlist",
   "playlist.removeDownload": "Supprimer le téléchargement",
   "playlist.confirmRemoveDownload": "Supprimer tous les fichiers téléchargés de cette playlist ?",
@@ -620,5 +619,15 @@
   "toast.downloadStarted.other": "Téléchargement de {{count}} pistes…",
   "toast.playlistDownloaded": "Playlist téléchargée",
   "toast.playlistDownloadPartial": "Certaines pistes ont échoué — playlist partiellement téléchargée",
-  "downloads.active": "Téléchargements"
+  "downloads.active": "Téléchargements",
+  "settings.downloadFormat": "Format de téléchargement",
+  "settings.downloadFormatDesc": "Format utilisé pour les téléchargements hors ligne",
+  "settings.downloadFolder": "Dossier de téléchargement",
+  "settings.browse": "Parcourir",
+  "settings.reset": "Réinitialiser",
+  "toast.downloadFolderReset": "Dossier de téléchargement réinitialisé",
+  "context.downloadSong": "Télécharger la chanson",
+  "toast.songSaved": "Chanson enregistrée",
+  "toast.songSaveError": "Impossible d'enregistrer la chanson",
+  "player.saveSong": "Enregistrer la chanson"
 }

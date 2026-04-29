@@ -1213,15 +1213,13 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
       playlistDl.onComplete((playlistId, success) => {
         downloadUI.updateDownloadButton(playlistId);
         if (downloadUI.updateGlobalIndicator) downloadUI.updateGlobalIndicator();
-        for (const sel of ['#btn-download-playlist', '#btn-album-download']) {
-          const btn = $(sel);
-          if (btn && btn.dataset.playlistId === playlistId) {
-            btn.classList.add('dl-completing');
-            btn.addEventListener('animationend', () => btn.classList.remove('dl-completing'), { once: true });
-          }
-        }
-        if (success) showToast(I18n.t('toast.playlistDownloaded'));
-        else showToast(I18n.t('toast.playlistDownloadPartial'));
+        const status = playlistDl.getStatus(playlistId);
+        const firstPath = Object.values(status?.tracks || {})[0];
+        const action = firstPath
+          ? { label: I18n.t('context.showInFolder'), onClick: () => window.snowify.showInFolder(firstPath) }
+          : null;
+        if (success) showToast(I18n.t('toast.playlistDownloaded'), action);
+        else showToast(I18n.t('toast.playlistDownloadPartial'), action);
         renderLibrary();
       });
 

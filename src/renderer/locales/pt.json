@@ -608,7 +608,6 @@
   "welcome.enterEmailForReset": "Digite seu e-mail para redefinir sua senha",
   "welcome.forgotPassword": "Esqueceu a senha?",
   "welcome.resetEmailSent": "E-mail de redefinição enviado — verifique sua caixa de entrada (e spam)",
-
   "playlist.download": "Baixar playlist",
   "playlist.removeDownload": "Remover download",
   "playlist.confirmRemoveDownload": "Remover todos os arquivos baixados desta playlist?",
@@ -620,5 +619,15 @@
   "toast.downloadStarted.other": "Baixando {{count}} faixas…",
   "toast.playlistDownloaded": "Playlist baixada",
   "toast.playlistDownloadPartial": "Algumas faixas falharam — playlist baixada parcialmente",
-  "downloads.active": "Downloads"
+  "downloads.active": "Downloads",
+  "settings.downloadFormat": "Formato de download",
+  "settings.downloadFormatDesc": "Formato usado para downloads offline de músicas e playlists",
+  "settings.downloadFolder": "Pasta de downloads",
+  "settings.browse": "Procurar",
+  "settings.reset": "Redefinir",
+  "toast.downloadFolderReset": "Pasta de downloads redefinida",
+  "context.downloadSong": "Baixar música",
+  "toast.songSaved": "Música salva",
+  "toast.songSaveError": "Não foi possível salvar a música",
+  "player.saveSong": "Salvar música"
 }

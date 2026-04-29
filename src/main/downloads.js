@@ -83,16 +83,16 @@ function register(ipcMain, ctx) {
     return fs.existsSync(filePath);
   });
 
-  // Override main's existing song:saveTo (which is MP3-only) with a format-aware version.
-  // ytmusic.js registers it first; we re-register to override (last writer wins is the
-  // documented Electron behavior — but ipcMain.handle throws on duplicate). So we
-  // use a different channel name and the renderer prefers this one when available.
-  ipcMain.handle('song:saveAudioTo', async (_event, videoUrl, title, artist, thumbnailUrl, format) => {
+  // song:saveTo — replaces upstream's MP3-only handler (was in ytmusic.js) with
+  // a multi-format + thumbnail-embedding version. Backwards compatible: when
+  // `format` and `thumbnailUrl` are omitted (old 3-arg signature), defaults to mp3.
+  ipcMain.handle('song:saveTo', async (_event, videoUrl, title, artist, thumbnailUrl, format) => {
+    const { mt } = require('./i18n');
     format = format || 'mp3';
     const ext = getAudioExtension(format);
     const safeName = `${title || 'track'}${artist ? ' - ' + artist : ''}`.replace(/[/\\?%*:|"<>]/g, '_');
     const result = await dialog.showSaveDialog(ctx.mainWindow, {
-      title: 'Save song',
+      title: mt ? mt('dialog.saveSong') : 'Save song',
       defaultPath: safeName + ext,
       filters: [{ name: `${format.toUpperCase()} Audio`, extensions: [ext.slice(1)] }],
     });

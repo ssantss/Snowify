@@ -608,7 +608,6 @@
   "welcome.enterEmailForReset": "输入你的电子邮件地址以重置密码",
   "welcome.forgotPassword": "忘记密码？",
   "welcome.resetEmailSent": "密码重置邮件已发送 — 请检查收件箱（和垃圾邮件文件夹）",
-
   "playlist.download": "下载播放列表",
   "playlist.removeDownload": "移除下载",
   "playlist.confirmRemoveDownload": "移除此播放列表的所有已下载文件？",
@@ -620,5 +619,15 @@
   "toast.downloadStarted.other": "正在下载{{count}}首曲目…",
   "toast.playlistDownloaded": "播放列表已下载",
   "toast.playlistDownloadPartial": "部分曲目失败 — 播放列表已部分下载",
-  "downloads.active": "下载"
+  "downloads.active": "下载",
+  "settings.downloadFormat": "下载格式",
+  "settings.downloadFormatDesc": "用于离线歌曲和播放列表下载的格式",
+  "settings.downloadFolder": "下载文件夹",
+  "settings.browse": "浏览",
+  "settings.reset": "重置",
+  "toast.downloadFolderReset": "下载文件夹已重置",
+  "context.downloadSong": "下载歌曲",
+  "toast.songSaved": "歌曲已保存",
+  "toast.songSaveError": "无法保存歌曲",
+  "player.saveSong": "保存歌曲"
 }

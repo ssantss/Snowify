@@ -496,6 +496,36 @@ export async function initSettings() {
     callbacks.saveState();
   });
 
+  // ── Persistent downloads (format + folder) ──
+  const fmtSelect = $('#setting-download-format');
+  if (fmtSelect) {
+    fmtSelect.value = state.downloadFormat || 'mp3';
+    fmtSelect.addEventListener('change', () => {
+      state.downloadFormat = fmtSelect.value;
+      callbacks.saveState();
+    });
+  }
+  const folderEl = $('#setting-download-folder-path');
+  async function _refreshDlFolderLabel() {
+    if (!folderEl) return;
+    folderEl.textContent = state.downloadFolder || (await window.snowify.getDefaultMusicDir());
+  }
+  _refreshDlFolderLabel();
+  $('#btn-browse-download-folder')?.addEventListener('click', async () => {
+    const f = await window.snowify.pickDownloadFolder();
+    if (f) {
+      state.downloadFolder = f;
+      callbacks.saveState();
+      _refreshDlFolderLabel();
+    }
+  });
+  $('#btn-reset-download-folder')?.addEventListener('click', () => {
+    state.downloadFolder = '';
+    callbacks.saveState();
+    _refreshDlFolderLabel();
+    showToast(I18n.t('toast.downloadFolderReset'));
+  });
+
   videoQualitySelect.addEventListener('change', () => { state.videoQuality = videoQualitySelect.value; callbacks.saveState(); });
   videoPremuxedToggle.addEventListener('change', () => {
     state.videoPremuxed = videoPremuxedToggle.checked; videoQualitySelect.disabled = state.videoPremuxed; callbacks.saveState();

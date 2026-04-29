@@ -43,7 +43,9 @@
   "library.title": "La tua libreria",
   "library.emptyTitle": "Crea la tua prima playlist",
   "library.emptyDesc": "È facile — ti aiutiamo noi",
-  "library.createPlaylist": "Crea playlist",  "sidebar.yourLibrary": "La tua libreria",  "sidebar.playlists": "Playlist",
+  "library.createPlaylist": "Crea playlist",
+  "sidebar.yourLibrary": "La tua libreria",
+  "sidebar.playlists": "Playlist",
   "sidebar.following": "Seguiti",
   "sidebar.likedSongs": "Brani preferiti",
   "sidebar.songCount.one": "{{count}} brano",
@@ -606,7 +608,6 @@
   "welcome.enterEmailForReset": "Inserisci il tuo indirizzo e-mail per reimpostare la password",
   "welcome.forgotPassword": "Password dimenticata?",
   "welcome.resetEmailSent": "E-mail di reimpostazione inviata — controlla la posta in arrivo (e lo spam)",
-
   "playlist.download": "Scarica playlist",
   "playlist.removeDownload": "Rimuovi download",
   "playlist.confirmRemoveDownload": "Rimuovere tutti i file scaricati di questa playlist?",
@@ -618,5 +619,15 @@
   "toast.downloadStarted.other": "Scaricamento di {{count}} tracce…",
   "toast.playlistDownloaded": "Playlist scaricata",
   "toast.playlistDownloadPartial": "Alcune tracce fallite — playlist scaricata parzialmente",
-  "downloads.active": "Download"
+  "downloads.active": "Download",
+  "settings.downloadFormat": "Formato di download",
+  "settings.downloadFormatDesc": "Formato usato per i download offline di brani e playlist",
+  "settings.downloadFolder": "Cartella di download",
+  "settings.browse": "Sfoglia",
+  "settings.reset": "Reimposta",
+  "toast.downloadFolderReset": "Cartella di download reimpostata",
+  "context.downloadSong": "Scarica brano",
+  "toast.songSaved": "Brano salvato",
+  "toast.songSaveError": "Impossibile salvare il brano",
+  "player.saveSong": "Salva brano"
 }
