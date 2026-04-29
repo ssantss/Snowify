@@ -49,7 +49,7 @@ window.PlaylistDownloadManager = function PlaylistDownloadManager(opts) {
     _saveState();
 
     const newItems = tracks
-      .filter(t => !_state[playlistId].tracks[t.id])
+      .filter(t => t && t.id && t.url && !_state[playlistId].tracks[t.id])
       .map(t => ({
         playlistId, videoId: t.id, url: t.url, thumbnail: t.thumbnail,
         title: t.title || t.name, artist: t.artist,

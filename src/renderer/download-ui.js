@@ -74,7 +74,7 @@ window.DownloadUI = function DownloadUI(opts) {
       e.stopPropagation();
       if (fileExists && !(await fileExists(filePath))) {
         icon.remove();
-        playlistDl.validateAllTracks(fileExists);
+        await playlistDl.validateAllTracks(fileExists);
         showToast(I18n.t('toast.fileNotFound'));
         return;
       }
@@ -98,7 +98,7 @@ window.DownloadUI = function DownloadUI(opts) {
         e.stopPropagation();
         if (fileExists && !(await fileExists(filePath))) {
           icon.remove();
-          playlistDl.validateAllTracks(fileExists);
+          await playlistDl.validateAllTracks(fileExists);
           showToast(I18n.t('toast.fileNotFound'));
           return;
         }

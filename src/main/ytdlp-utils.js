@@ -78,8 +78,8 @@ async function embedThumbnail(format, filePath, thumbnailUrl) {
     } else if (fs.existsSync(tmpOut)) {
       fs.unlinkSync(tmpOut);
     }
-  } catch (_) {
-    // Thumbnail download failed — file still saved without cover
+  } catch (err) {
+    console.warn('Thumbnail embed failed:', err?.message || err);
   } finally {
     if (fs.existsSync(tmpThumb)) fs.unlinkSync(tmpThumb);
   }

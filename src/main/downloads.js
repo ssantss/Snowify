@@ -156,7 +156,14 @@ function register(ipcMain, ctx) {
   });
 
   ipcMain.handle('shell:showInFolder', (_event, filePath) => {
-    shell.showItemInFolder(filePath);
+    if (!filePath || typeof filePath !== 'string') return { error: 'Invalid path' };
+    try {
+      shell.showItemInFolder(filePath);
+      return { ok: true };
+    } catch (err) {
+      console.warn('showInFolder error:', err.message);
+      return { error: err.message };
+    }
   });
 }
 

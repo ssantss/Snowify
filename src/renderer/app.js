@@ -1197,15 +1197,15 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         cancelDownload: () => window.snowify.cancelPlaylistDownload(),
         deleteDownload: (plId, filePaths) => window.snowify.deletePlaylistDownload(plId, filePaths),
       });
-      window.__snowifyPlaylistDl = playlistDl;
 
       const downloadUI = window.DownloadUI({
         playlistDl, showToast, I18n, $, renderLibrary,
         getDownloadFolder: async () => state.downloadFolder || (await window.snowify.getDefaultMusicDir()),
         fileExists: (p) => window.snowify.fileExists(p),
       });
-      window.__snowifyDownloadUI = downloadUI;
 
+      // Register callbacks BEFORE exposing on window — avoids race where a
+      // download could fire progress/complete events with no listeners attached.
       playlistDl.onProgress((playlistId) => {
         downloadUI.updateDownloadButton(playlistId);
         if (downloadUI.updateGlobalIndicator) downloadUI.updateGlobalIndicator();
@@ -1224,6 +1224,9 @@ setTimeout(scheduleAutoMarqueeRefresh, 250);
         else showToast(I18n.t('toast.playlistDownloadPartial'));
         renderLibrary();
       });
+
+      window.__snowifyPlaylistDl = playlistDl;
+      window.__snowifyDownloadUI = downloadUI;
 
       if (downloadUI.initGlobalIndicator) downloadUI.initGlobalIndicator();
     }

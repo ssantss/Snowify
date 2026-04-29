@@ -198,7 +198,16 @@ export async function playTrack(track) {
       audio = engine.getActiveAudio();
       audioRef.audio = audio;
     } else {
-      const cachedPath = prefetchCache.getCachedPath(track.id);
+      let cachedPath = prefetchCache.getCachedPath(track.id);
+      // Persistent download fallback (separate from prefetch cache)
+      if (!cachedPath) {
+        const dlPath = window.__snowifyPlaylistDl?.getTrackPath(track.id);
+        if (dlPath) {
+          try {
+            if (await window.snowify.fileExists(dlPath)) cachedPath = dlPath;
+          } catch (_) {}
+        }
+      }
       if (!cachedPath) showToast(I18n.t('toast.loadingTrack', { title: track.title }));
       const directUrl = cachedPath
         ? pathToFileUrl(cachedPath)
