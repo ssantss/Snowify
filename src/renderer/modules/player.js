@@ -206,6 +206,8 @@ export async function playTrack(track) {
           try {
             if (await window.snowify.fileExists(dlPath)) cachedPath = dlPath;
           } catch (_) {}
+          // Guard after fileExists IPC await — user may have skipped tracks
+          if (gen !== _playGeneration) return;
         }
       }
       if (!cachedPath) showToast(I18n.t('toast.loadingTrack', { title: track.title }));
@@ -218,9 +220,17 @@ export async function playTrack(track) {
       audioRef.audio = audio;
     }
 
-    audio.volume = state.volume * engine.VOLUME_SCALE;
-    await audio.play();
-    if (gen !== _playGeneration) return;
+    // Capture local ref so a concurrent playTrack() that reassigns the module-level
+    // `audio` cannot make us call play() on the wrong element (would leave two
+    // engines audible — the "background noise" bug).
+    const myAudio = audio;
+    myAudio.volume = state.volume * engine.VOLUME_SCALE;
+    await myAudio.play();
+    if (gen !== _playGeneration) {
+      // Stale generation — pause to silence stray playback if we won the race
+      try { myAudio.pause(); } catch (_) {}
+      return;
+    }
 
     _consecutiveFailures = 0;
     state.isPlaying      = true;
