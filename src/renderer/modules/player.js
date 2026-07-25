@@ -291,6 +291,7 @@ export function playNext({ respectRepeatOne = false } = {}) {
     if (nextIdx >= state.queue.length) nextIdx = 0;
     state.queueIndex = nextIdx;
     playTrack(state.queue[nextIdx]);
+    callbacks.recheckInjections();
     renderQueue();
     return;
   }
@@ -305,6 +306,7 @@ export function playNext({ respectRepeatOne = false } = {}) {
   }
   state.queueIndex = nextIdx;
   playTrack(state.queue[nextIdx]);
+  callbacks.recheckInjections();
   renderQueue();
 }
 
@@ -429,6 +431,7 @@ function handleEngineTransition(evt) {
       audio = engine.getActiveAudio(); audioRef.audio = audio;
       showNowPlaying(evt.track);
       addToRecent(evt.track);
+      callbacks.recheckInjections();
       updateDiscordPresence(evt.track);
       updatePositionState();
       updatePlayButton();
@@ -449,6 +452,7 @@ function handleEngineTransition(evt) {
       normalizer.finalizeMeasurement(audio, false);
       showNowPlaying(evt.track);
       addToRecent(evt.track);
+      callbacks.recheckInjections();
       updateDiscordPresence(evt.track);
       updateTrackHighlight();
       renderQueue();
@@ -627,7 +631,7 @@ btnShuffle.addEventListener('click', () => {
       const idx = state.originalQueue.findIndex(t => t.id === current.id);
       state.queue = [...state.originalQueue]; state.queueIndex = idx >= 0 ? idx : 0;
     }
-    engine.clearPreload(); prefetchCache.clear(); renderQueue();
+    engine.clearPreload(); prefetchCache.clear(); callbacks.recheckInjections(); renderQueue();
   }
   callbacks.saveState();
 });

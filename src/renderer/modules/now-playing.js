@@ -15,6 +15,7 @@ import { lyricsState, parseLRC, renderSyncedLyrics, renderPlainLyrics, startLyri
 import { updatePlayButton, updateProgress, setVolume, togglePlay, playPrev, playNext,
          isShowTimeRemaining, toggleShowTimeRemaining, getPrevVolume, setPrevVolume } from './player.js';
 import { toggleLike } from './player.js';
+import { callbacks } from './callbacks.js';
 import { buildPlaylistSectionHtml, removeContextMenu, positionContextMenu, handleTogglePlaylist } from './context-menus.js';
 import { startRadio, handlePlayNext, handleAddToQueue, switchQueueTab, renderQueue } from './queue.js';
 import { openArtistPage, bindArtistLinks } from './artist.js';
@@ -502,12 +503,14 @@ $('.np-track-info').addEventListener('contextmenu', (e) => {
   menu.style.top  = e.clientY + 'px';
 
   const playlistSection = buildPlaylistSectionHtml(track);
+  const clientsSection  = callbacks.buildClientsFavSection(track);
 
   menu.innerHTML = `
     ${isLocal ? '' : `<div class="context-menu-item" data-action="start-radio">${I18n.t('context.startRadio')}</div>`}
     ${isLocal ? '' : `<div class="context-menu-item" data-action="watch-video">${I18n.t('context.watchVideo')}</div>`}
     <div class="context-menu-item" data-action="like">${isLiked ? I18n.t('context.unlike') : I18n.t('context.like')}</div>
     ${playlistSection}
+    ${clientsSection}
     ${track.artistId ? `<div class="context-menu-divider"></div><div class="context-menu-item" data-action="go-to-artist">${I18n.t('context.goToArtist')}</div>` : ''}
     ${isLocal ? '' : `<div class="context-menu-divider"></div><div class="context-menu-item" data-action="share">${I18n.t('context.copyLink')}</div>`}
   `;
@@ -524,6 +527,7 @@ $('.np-track-info').addEventListener('contextmenu', (e) => {
       case 'watch-video': openVideoPlayer(track.id, track.title, track.artist); break;
       case 'like': toggleLike(track); break;
       case 'toggle-playlist': handleTogglePlaylist(item.dataset.pid, track); break;
+      case 'toggle-client':   callbacks.handleToggleClient(item.dataset.cid, track); break;
       case 'go-to-artist': openArtistPage(track.artistId); break;
       case 'share':
         navigator.clipboard.writeText(`https://snowify.cc/track/${track.id}`);
