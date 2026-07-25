@@ -8026,9 +8026,16 @@ body.i18n-switching { opacity: 0; }
   width: 40px;
   height: 40px;
   border-radius: 6px;
+}
+/* Clipping is only needed to round the overlay's corners, and only explore rows
+   have one. Applying it to every row would crop the scale(1.10) hover on
+   .track-thumb and hide its box-shadow in playlists, albums and artist pages. */
+.track-thumb-wrap.explore {
+  cursor: pointer;
   overflow: hidden;
 }
-.track-thumb-wrap.explore { cursor: pointer; }
+/* The row itself is inert in explore contexts — don't advertise a click. */
+.track-row[data-context="search"] { cursor: default; }
 .track-thumb-overlay {
   position: absolute;
   inset: 0;
