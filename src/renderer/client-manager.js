@@ -275,6 +275,14 @@ window.ClientManager = function ClientManager(opts) {
     heroCover.innerHTML = `<div class="client-hero-cover"><svg width="64" height="64" viewBox="0 0 24 24" fill="#fff"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
     heroCover.style.background = 'none';
 
+    // #view-playlist is shared with showPlaylistDetail — clear what it left behind,
+    // otherwise the previous playlist's cover picker / header menu stay wired up.
+    heroCover.classList.remove('playlist-cover-editable', 'liked-hero-cover', 'liked-cover');
+    heroCover.onclick = null;
+    heroCover.title   = '';
+    const heroHeader = $('#view-playlist .playlist-header');
+    if (heroHeader) heroHeader.oncontextmenu = null;
+
     // Hide playlist-specific buttons, repurpose delete for client
     const deleteBtn = $('#btn-delete-playlist');
     const folderBtn = $('#btn-import-folder');
@@ -285,17 +293,16 @@ window.ClientManager = function ClientManager(opts) {
     }
 
     if (client.favorites.length) {
-      renderTrackList(tracksContainer, client.favorites, 'client', client.id);
-
-      // Context menu for tracks in client detail
-      tracksContainer.querySelectorAll('.track-row').forEach(row => {
-        row.addEventListener('contextmenu', (e) => {
-          e.preventDefault();
-          const idx = parseInt(row.dataset.index);
-          const track = client.favorites[idx];
-          showClientTrackMenu(e, track, client, idx);
-        });
-      });
+      // Tag up front so every play path (row, thumbnail, Play Next / Add to Queue badges)
+      // sends the track to the queue already identified as this client's.
+      const firstName = client.name.split(' ')[0];
+      const tagged = client.favorites.map(t => ({
+        ...t, _clientIds: [client.id], _clientNames: [firstName],
+      }));
+      // 5th arg overrides the delegated menu — attaching per-row listeners instead loses
+      // the race against showContextMenu's removeContextMenu(), and breaks on virtualized rows.
+      renderTrackList(tracksContainer, tagged, 'client', client.id,
+        (e, track, idx) => showClientTrackMenu(e, track, client, idx));
     } else {
       tracksContainer.innerHTML = `
         <div class="empty-state">
@@ -374,7 +381,8 @@ window.ClientManager = function ClientManager(opts) {
           break;
         case 'play-next': handlePlayNext(taggedTrack); break;
         case 'add-queue': handleAddToQueue(taggedTrack); break;
-        case 'like': toggleLike(track); break;
+        // Untagged copy — likedSongs is persisted without stripping _clientIds.
+        case 'like': toggleLike(client.favorites[idx]); break;
         case 'start-radio': {
           const upNexts = await getUpNexts(track.id);
           if (upNexts.length) {

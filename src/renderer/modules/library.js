@@ -31,7 +31,8 @@ export function startTrackDrag(e, track) {
   e.dataTransfer.setData('text/plain', track.title);
   const el = e.target.closest('.track-row, .track-card');
   if (el) el.classList.add('dragging');
-  document.querySelectorAll('.playlist-item').forEach(p => p.classList.add('drop-target'));
+  // Scoped to the playlist list — client rows share the class but have no drop handlers.
+  document.querySelectorAll('#playlist-list .playlist-item').forEach(p => p.classList.add('drop-target'));
 }
 
 document.addEventListener('dragend', () => {
@@ -469,6 +470,10 @@ export function showPlaylistDetail(playlist, isLiked) {
 
   heroName.textContent  = playlist.name;
   heroCount.textContent = I18n.tp('sidebar.songCount', playlist.tracks.length);
+
+  // #view-playlist is shared with the client detail view, which overwrites this label.
+  const typeLabel = $('#view-playlist .playlist-type');
+  if (typeLabel) typeLabel.textContent = I18n.t('playlist.type');
 
   if (isLiked) {
     heroCover.innerHTML = `<svg width="64" height="64" viewBox="0 0 24 24" fill="rgba(255,255,255,0.88)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
